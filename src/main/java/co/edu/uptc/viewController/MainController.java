@@ -9,13 +9,24 @@ import co.edu.uptc.controller.*;
 public class MainController {
 
     @FXML private TextArea outputArea;
+
+    // Campos de estaciones
+    @FXML private TextField stationIdField;
+    @FXML private TextField stationNameField;
+
+    // Campos de conexiones
+    @FXML private TextField connFromField;
+    @FXML private TextField connToField;
+    @FXML private TextField connDistanceField;
+
+    // Campos de ruta
     @FXML private TextField fromField;
     @FXML private TextField toField;
 
     private GraphController graphController = new GraphController();
     private RouteController routeController = new RouteController(graphController);
 
-    private final String DEFAULT_XML_PATH = "src/main/resources/co/edu/uptc/network_example.xml"; // ruta donde se guardará/cargará
+    private final String DEFAULT_XML_PATH = "src/main/resources/co/edu/uptc/network_example.xml";
 
     @FXML
     private void onLoadGraph() {
@@ -46,6 +57,44 @@ public class MainController {
             sb.append("• ").append(n.getId()).append(" - ").append(n.getName()).append("\n");
         }
         outputArea.setText(sb.toString());
+    }
+
+    @FXML
+    private void onAddStation() {
+        String id = stationIdField.getText().trim();
+        String name = stationNameField.getText().trim();
+        if (id.isEmpty() || name.isEmpty()) {
+            outputArea.setText("⚠️ Ingresa ID y nombre de la estación.");
+            return;
+        }
+
+        graphController.addStation(id, name);
+        outputArea.setText("✅ Estación agregada: " + id + " - " + name);
+        stationIdField.clear();
+        stationNameField.clear();
+    }
+
+    @FXML
+    private void onAddConnection() {
+        String from = connFromField.getText().trim();
+        String to = connToField.getText().trim();
+        String distStr = connDistanceField.getText().trim();
+
+        if (from.isEmpty() || to.isEmpty() || distStr.isEmpty()) {
+            outputArea.setText("⚠️ Ingresa origen, destino y distancia.");
+            return;
+        }
+
+        try {
+            double distance = Double.parseDouble(distStr);
+            graphController.addConnection(from, to, distance);
+            outputArea.setText("✅ Conexión agregada: " + from + " → " + to + " (" + distance + ")");
+            connFromField.clear();
+            connToField.clear();
+            connDistanceField.clear();
+        } catch (NumberFormatException e) {
+            outputArea.setText("⚠️ Distancia inválida.");
+        }
     }
 
     @FXML

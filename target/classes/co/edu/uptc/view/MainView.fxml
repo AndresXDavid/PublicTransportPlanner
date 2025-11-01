@@ -19,13 +19,35 @@
     </center>
 
     <bottom>
-        <HBox spacing="5" alignment="CENTER_LEFT" style="-fx-padding: 5;">
-            <Label text="Ruta de:"/>
-            <TextField fx:id="fromField" promptText="ID origen"/>
-            <Label text="a:"/>
-            <TextField fx:id="toField" promptText="ID destino"/>
-            <Button text="Calcular Ruta" onAction="#onCalculateRoute"/>
-        </HBox>
+        <VBox spacing="10" style="-fx-padding: 5;">
+
+            <!-- Agregar nueva estación -->
+            <HBox spacing="5" alignment="CENTER_LEFT">
+                <Label text="Agregar estación:"/>
+                <TextField fx:id="stationIdField" promptText="ID"/>
+                <TextField fx:id="stationNameField" promptText="Nombre"/>
+                <Button text="Agregar" onAction="#onAddStation"/>
+            </HBox>
+
+            <!-- Agregar nueva conexión -->
+            <HBox spacing="5" alignment="CENTER_LEFT">
+                <Label text="Agregar conexión:"/>
+                <TextField fx:id="connFromField" promptText="Desde ID"/>
+                <TextField fx:id="connToField" promptText="Hasta ID"/>
+                <TextField fx:id="connDistanceField" promptText="Distancia"/>
+                <Button text="Agregar" onAction="#onAddConnection"/>
+            </HBox>
+
+            <!-- Calcular ruta -->
+            <HBox spacing="5" alignment="CENTER_LEFT">
+                <Label text="Ruta de:"/>
+                <TextField fx:id="fromField" promptText="ID origen"/>
+                <Label text="a:"/>
+                <TextField fx:id="toField" promptText="ID destino"/>
+                <Button text="Calcular Ruta" onAction="#onCalculateRoute"/>
+            </HBox>
+
+        </VBox>
     </bottom>
 
 </BorderPane>
