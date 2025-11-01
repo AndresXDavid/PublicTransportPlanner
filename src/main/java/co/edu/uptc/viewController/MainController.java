@@ -2,33 +2,66 @@ package co.edu.uptc.viewController;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
-import co.edu.uptc.controller.GraphController;
-import co.edu.uptc.model.Node;
+import javafx.scene.control.TextField;
+import co.edu.uptc.model.*;
+import co.edu.uptc.controller.*;
 
 public class MainController {
 
     @FXML private TextArea outputArea;
+    @FXML private TextField fromField;
+    @FXML private TextField toField;
 
     private GraphController graphController = new GraphController();
+    private RouteController routeController = new RouteController(graphController);
+
+    private final String DEFAULT_XML_PATH = "src/main/resources/co/edu/uptc/network_example.xml"; // ruta donde se guardará/cargará
 
     @FXML
     private void onLoadGraph() {
         try {
-            graphController.loadGraph("src/main/resources/co/edu/uptc/network_example.xml");
+            graphController.loadGraph(DEFAULT_XML_PATH);
             outputArea.setText("✅ Grafo cargado correctamente.\nNodos: " + graphController.getAllNodes().size());
         } catch (Exception e) {
-            outputArea.setText("❌ Error al cargar el grafo: " + e.getMessage());
+            outputArea.setText("❌ Error cargando grafo: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void onSaveGraph() {
+        try {
+            graphController.saveGraph(DEFAULT_XML_PATH);
+            outputArea.setText("✅ Grafo guardado correctamente en: " + DEFAULT_XML_PATH);
+        } catch (Exception e) {
+            outputArea.setText("❌ Error guardando grafo: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     @FXML
     private void onShowNodes() {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("📌 Nodos del grafo:\n");
         for (Node n : graphController.getAllNodes()) {
-            sb.append("• ").append(n.getId())
-              .append(" - ").append(n.getName()).append("\n");
+            sb.append("• ").append(n.getId()).append(" - ").append(n.getName()).append("\n");
         }
         outputArea.setText(sb.toString());
+    }
+
+    @FXML
+    private void onCalculateRoute() {
+        String fromId = fromField.getText().trim();
+        String toId = toField.getText().trim();
+        if (fromId.isEmpty() || toId.isEmpty()) {
+            outputArea.setText("⚠️ Ingresa ID de origen y destino.");
+            return;
+        }
+
+        RouteResult result = routeController.findShortestRoute(fromId, toId);
+        if (result == null || result.getPath().isEmpty()) {
+            outputArea.setText("⚠️ No se encontró ruta entre " + fromId + " y " + toId);
+        } else {
+            outputArea.setText("🛤 Ruta encontrada:\n" + result.toString());
+        }
     }
 }

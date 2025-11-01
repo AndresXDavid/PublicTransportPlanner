@@ -9,6 +9,7 @@
     <top>
         <ToolBar>
             <Button text="Cargar XML" onAction="#onLoadGraph"/>
+            <Button text="Guardar XML" onAction="#onSaveGraph"/>
             <Button text="Mostrar Nodos" onAction="#onShowNodes"/>
         </ToolBar>
     </top>
@@ -16,5 +17,15 @@
     <center>
         <TextArea fx:id="outputArea" editable="false" wrapText="true"/>
     </center>
+
+    <bottom>
+        <HBox spacing="5" alignment="CENTER_LEFT" style="-fx-padding: 5;">
+            <Label text="Ruta de:"/>
+            <TextField fx:id="fromField" promptText="ID origen"/>
+            <Label text="a:"/>
+            <TextField fx:id="toField" promptText="ID destino"/>
+            <Button text="Calcular Ruta" onAction="#onCalculateRoute"/>
+        </HBox>
+    </bottom>
 
 </BorderPane>
