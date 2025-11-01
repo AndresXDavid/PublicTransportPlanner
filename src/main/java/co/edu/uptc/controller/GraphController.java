@@ -16,9 +16,11 @@ public class GraphController {
     }
 
     // Crear o agregar una estación
-    public void addStation(String id, String name) {
-        if (!nodes.containsKey(id)) {
+    public boolean addStation(String id, String name) {
+        if (nodes.containsKey(id)) return false;
+        else {
             nodes.put(id, new Node(id, name));
+            return true;
         }
     }
 
