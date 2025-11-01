@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphData>
+    <nodes>
+        <node>
+            <id>1</id>
+            <name>Estación Central</name>
+            <edges>
+                <edge>
+                    <sourceId>1</sourceId>
+                    <destinationId>2</destinationId>
+                    <distance>5.0</distance>
+                </edge>
+                <edge>
+                    <sourceId>1</sourceId>
+                    <destinationId>3</destinationId>
+                    <distance>7.5</distance>
+                </edge>
+            </edges>
+        </node>
+        <node>
+            <id>2</id>
+            <name>Estación Norte</name>
+            <edges>
+                <edge>
+                    <sourceId>2</sourceId>
+                    <destinationId>1</destinationId>
+                    <distance>5.0</distance>
+                </edge>
+                <edge>
+                    <sourceId>2</sourceId>
+                    <destinationId>4</destinationId>
+                    <distance>3.2</distance>
+                </edge>
+            </edges>
+        </node>
+        <node>
+            <id>3</id>
+            <name>Estación Sur</name>
+            <edges>
+                <edge>
+                    <sourceId>3</sourceId>
+                    <destinationId>1</destinationId>
+                    <distance>7.5</distance>
+                </edge>
+            </edges>
+        </node>
+        <node>
+            <id>4</id>
+            <name>Estación Este</name>
+            <edges>
+                <edge>
+                    <sourceId>4</sourceId>
+                    <destinationId>2</destinationId>
+                    <distance>3.2</distance>
+                </edge>
+            </edges>
+        </node>
+    </nodes>
+</graphData>
