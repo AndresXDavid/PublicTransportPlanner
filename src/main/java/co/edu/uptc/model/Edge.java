@@ -37,6 +37,10 @@ public class Edge {
         return distance;
     }
 
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
     @Override
     public String toString() {
         return sourceId + " -> " + destinationId + " (" + distance + ")";
