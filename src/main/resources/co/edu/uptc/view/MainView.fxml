@@ -42,6 +42,40 @@
                 <Button fx:id="btnAddConnection" onAction="#onAddConnection" text="%button.add.connection"/>
             </HBox>
 
+            <!-- Ediciones -->
+            <VBox spacing="10" alignment="CENTER_LEFT">
+
+                <!-- Edición/Eliminación de Estaciones -->
+                <HBox spacing="5" alignment="CENTER_LEFT">
+                    <Label fx:id="lblStationId" text="%prompt.station.id"/>
+                    <TextField fx:id="stationIdEditField" promptText="%station.enter.id"/>
+
+                    <Label fx:id="lblStationName" text="%prompt.station.name"/>
+                    <TextField fx:id="stationNameEditField" promptText="%station.enter.name"/>
+
+                    <Button fx:id="btnEditStation" onAction="#onEditStation" text="%button.edit.station"/>
+                    
+                    <Button fx:id="btnDeleteStation" onAction="#onDeleteStation" text="%button.delete.station"/>
+                </HBox>
+
+                <!-- Edición/Eliminación de Conexiones -->
+                <HBox spacing="5" alignment="CENTER_LEFT">
+                    <Label fx:id="lblConnFrom" text="%prompt.connection.from"/>
+                    <TextField fx:id="connFromEditField" promptText="%connection.enter.from"/>
+
+                    <Label fx:id="lblConnTo" text="%prompt.connection.to"/>
+                    <TextField fx:id="connToEditField" promptText="%connection.enter.to"/>
+
+                    <Label fx:id="lblConnDistance" text="%prompt.connection.distance"/>
+                    <TextField fx:id="connDistanceEditField" promptText="%connection.enter.distance"/>
+
+                    <Button fx:id="btnEditConnection" onAction="#onEditConnection" text="%button.edit.connection"/>
+                    
+                    <Button fx:id="btnDeleteConnection" onAction="#onDeleteConnection" text="%button.delete.connection"/>                   
+                </HBox>
+
+            </VBox>
+
             <!-- Calcular ruta -->
             <HBox spacing="5" alignment="CENTER_LEFT">
                 <Label fx:id="lblRoute" text="%label.route"/>

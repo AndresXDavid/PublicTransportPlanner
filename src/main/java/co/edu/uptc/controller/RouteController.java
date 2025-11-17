@@ -3,16 +3,32 @@ package co.edu.uptc.controller;
 import co.edu.uptc.model.*;
 import java.util.*;
 
+/**
+ * Controlador para el cálculo de rutas en el grafo.
+ * Permite obtener rutas basadas en menor tiempo/distancia o en menor número de transbordos.
+ */
 public class RouteController {
+
+    /** Referencia al controlador del grafo que contiene los nodos y conexiones. */
     private GraphController graphController;
 
+    /**
+     * Constructor del RouteController.
+     * 
+     * @param graphController instancia del controlador del grafo
+     */
     public RouteController(GraphController graphController) {
         this.graphController = graphController;
     }
 
     /**
-     * 1. Ruta más corta (menor tiempo / distancia)
-     *    Algoritmo de Dijkstra
+     * Encuentra la ruta más corta entre dos nodos usando el algoritmo de Dijkstra.
+     * El peso de cada arista se considera como distancia o tiempo.
+     * 
+     * @param fromId ID del nodo de origen
+     * @param toId ID del nodo de destino
+     * @return un objeto RouteResult que contiene la lista de nodos del camino y la distancia total;
+     *         devuelve null si alguno de los nodos no existe
      */
     public RouteResult findShortestTimeRoute(String fromId, String toId) {
         Node start = graphController.getNode(fromId);
@@ -40,7 +56,6 @@ public class RouteController {
                 Node neighbor = graphController.getNode(edge.getDestinationId());
                 if (neighbor == null) continue;
 
-                // Peso = tiempo o distancia
                 double newDist = distance.get(current) + edge.getDistance();
 
                 if (newDist < distance.get(neighbor)) {
@@ -51,7 +66,6 @@ public class RouteController {
             }
         }
 
-        // reconstruir ruta
         List<Node> path = new ArrayList<>();
         for (Node at = end; at != null; at = previous.get(at)) {
             path.add(at);
@@ -62,8 +76,12 @@ public class RouteController {
     }
 
     /**
-     * 2. Ruta con menos transbordos (menos pasos)
-     *    Algoritmo BFS
+     * Encuentra la ruta con menos transbordos (menos pasos) entre dos nodos usando BFS.
+     * 
+     * @param fromId ID del nodo de origen
+     * @param toId ID del nodo de destino
+     * @return un objeto RouteResult que contiene la lista de nodos del camino y el número de transbordos;
+     *         devuelve null si alguno de los nodos no existe
      */
     public RouteResult findFewestTransfers(String fromId, String toId) {
         Node start = graphController.getNode(fromId);
@@ -98,13 +116,12 @@ public class RouteController {
             }
         }
 
-        // reconstruir ruta
         List<Node> path = new ArrayList<>();
         for (Node at = end; at != null; at = previous.get(at)) {
             path.add(at);
         }
         Collections.reverse(path);
 
-        return new RouteResult(path, steps.get(end));
+        return new RouteResult(path, steps.get(end)-1);
     }
 }

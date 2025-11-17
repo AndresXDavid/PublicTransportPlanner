@@ -42,10 +42,44 @@ public class Node {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public List<Edge> getEdges() {
         if (edges == null) edges = new ArrayList<>();
         return edges;
     }
+
+    /**
+     * Elimina una arista que apunte a un nodo específico.
+     *
+     * @param nodeId ID del nodo destino de la arista a eliminar
+     * @return true si se eliminó alguna arista, false si no existía
+     */
+    public boolean removeEdgeTo(String nodeId) {
+        if (edges == null) return false;
+        return edges.removeIf(edge -> edge.getDestinationId().equals(nodeId));
+    }
+
+    /**
+     * Actualiza la distancia de la arista hacia un nodo específico.
+     *
+     * @param nodeId ID del nodo destino
+     * @param newDistance Nueva distancia de la arista (debe ser mayor que 0)
+     * @return true si se actualizó correctamente, false si no se encontró la arista
+     */
+    public boolean updateEdgeDistance(String nodeId, double newDistance) {
+        if (edges == null || newDistance <= 0) return false;
+        for (Edge edge : edges) {
+            if (edge.getDestinationId().equals(nodeId)) {
+                edge.setDistance(newDistance);
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     @Override
     public boolean equals(Object o) {
