@@ -48,6 +48,7 @@
                 <TextField fx:id="fromField" promptText="%prompt.route.from"/>
                 <Label fx:id="lblto" text="%label.to"/>
                 <TextField fx:id="toField" promptText="%prompt.route.to"/>
+                <ComboBox fx:id="cmbSearchType" prefWidth="120"/>
                 <Button fx:id="calculateRoute" onAction="#onCalculateRoute" text="%button.calculate.route"/>
             </HBox>
 

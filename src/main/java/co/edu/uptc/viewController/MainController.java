@@ -2,10 +2,12 @@ package co.edu.uptc.viewController;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import co.edu.uptc.model.*;
 import co.edu.uptc.controller.*;
 
+import java.io.File;
 import java.util.*;
 
 public class MainController {
@@ -34,6 +36,10 @@ public class MainController {
     @FXML private Button calculateRoute;
     @FXML private Label lblLanguage;
 
+    // ComboBox de Busqueda de Ruta
+    @FXML private ComboBox<String> cmbSearchType;
+
+    // ComboBox de idiomas
     @FXML private ComboBox<String> cmbLanguage;
 
     private GraphController graphController = new GraphController();
@@ -53,20 +59,55 @@ public class MainController {
 
     @FXML
     private void initialize() {
+        // Carga inicial con archivo por defecto
+        loadGraphFromFile(DEFAULT_XML_PATH);
+
+        // Configurar ComboBox de idiomas
         cmbLanguage.getItems().addAll("Español", "English", "Français");
         cmbLanguage.setValue(currentLocale.getLanguage().equals("es") ? "Español" : "English");
 
         cmbLanguage.setOnAction(event -> onLanguageSelected());
+
+        cmbSearchType.getItems().addAll(
+            bundle.getString("search.time"),
+            bundle.getString("search.transbords")
+        );
+
+        cmbSearchType.getSelectionModel().selectFirst();
 
         updateTexts();
     }
 
     @FXML
     private void onLoadGraph() {
-        try {
-            graphController.loadGraph(DEFAULT_XML_PATH);
-            outputArea.setText(bundle.getString("graph.loaded") + "\n" +
+        // Crear el FileChooser
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(bundle.getString("graph.load.dialog")); // título del diálogo
+        fileChooser.getExtensionFilters().add(
+            new FileChooser.ExtensionFilter("Archivos XML", "*.xml")
+        );
+
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            try {
+                graphController.loadGraph(selectedFile.getAbsolutePath());
+                outputArea.setText(bundle.getString("graph.loaded") + "\n" +
                                 bundle.getString("graph.nodes") + ": " + graphController.getAllNodes().size());
+            } catch (Exception e) {
+                outputArea.setText(bundle.getString("graph.load.error") + ": " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            outputArea.setText(bundle.getString("graph.load.cancelled"));
+        }
+    }
+
+    // Carga un archivo dado, maneja errores
+    private void loadGraphFromFile(String path) {
+        try {
+            graphController.loadGraph(path);
+            outputArea.setText(bundle.getString("graph.loaded") + "\n" +
+                            bundle.getString("graph.nodes") + ": " + graphController.getAllNodes().size());
         } catch (Exception e) {
             outputArea.setText(bundle.getString("graph.load.error") + ": " + e.getMessage());
             e.printStackTrace();
@@ -75,14 +116,29 @@ public class MainController {
 
     @FXML
     private void onSaveGraph() {
-        try {
-            graphController.saveGraph(DEFAULT_XML_PATH);
-            outputArea.setText(bundle.getString("graph.saved") + ": " + DEFAULT_XML_PATH);
-        } catch (Exception e) {
-            outputArea.setText(bundle.getString("graph.save.error") + ": " + e.getMessage());
-            e.printStackTrace();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(bundle.getString("graph.save.dialog")); // título del diálogo
+        fileChooser.getExtensionFilters().add(
+            new FileChooser.ExtensionFilter("Archivos XML", "*.xml")
+        );
+
+        // Sugerir nombre por defecto
+        fileChooser.setInitialFileName("graph.xml");
+
+        File selectedFile = fileChooser.showSaveDialog(null);
+        if (selectedFile != null) {
+            try {
+                graphController.saveGraph(selectedFile.getAbsolutePath());
+                outputArea.setText(bundle.getString("graph.saved") + ": " + selectedFile.getAbsolutePath());
+            } catch (Exception e) {
+                outputArea.setText(bundle.getString("graph.save.error") + ": " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            outputArea.setText(bundle.getString("graph.save.cancelled")); // opcional
         }
     }
+
 
     @FXML
     private void onShowNodes() {
@@ -154,6 +210,8 @@ public class MainController {
     private void onCalculateRoute() {
         String fromId = fromField.getText().trim();
         String toId = toField.getText().trim();
+        String selected = cmbSearchType.getValue();
+
         if (fromId.isEmpty()) {
             outputArea.setText(bundle.getString("route.enter.from"));
             return;
@@ -164,14 +222,41 @@ public class MainController {
             return;
         }
 
-        RouteResult result = routeController.findShortestRoute(fromId, toId);
+        RouteResult result;
+
+        if (selected.equals(bundle.getString("search.time"))) {
+            result = routeController.findShortestTimeRoute(fromId, toId);
+        } else if (selected.equals(bundle.getString("search.transbords"))) {
+            result = routeController.findFewestTransfers(fromId, toId);
+        } else {
+            outputArea.setText("Tipo de búsqueda no reconocido.");
+            return;
+        }           
+
         if (result == null || result.getPath().isEmpty()) {
             outputArea.setText(bundle.getString("route.notfound") + ": " + fromId + " → " + toId);
-        } else {
-            outputArea.setText(bundle.getString("route.found") + ":\n" + result.toString());
+            return;
         }
+
+        // ========================= Formatear salida con i18n =========================
+        StringBuilder output = new StringBuilder();
+        output.append(bundle.getString("route.found")).append(":\n");
+        output.append(bundle.getString("label.route")).append(": ").append(result.getPathString());
+
+        if (result.getType() == RouteResultType.DISTANCE || result.getType() == RouteResultType.BOTH) {
+            output.append(" | ").append(bundle.getString("label.distance"))
+                .append(": ").append(result.getTotalDistance());
+        }
+
+        if (result.getType() == RouteResultType.TRANSFERS || result.getType() == RouteResultType.BOTH) {
+            output.append(" | ").append(bundle.getString("label.transfers"))
+                .append(": ").append(result.getTransbords());
+        }
+
+        outputArea.setText(output.toString());
     }
 
+    // ========================== SELECCIÓN DE IDIOMA ==========================
     @FXML
     private void onLanguageSelected() {
         String selected = cmbLanguage.getValue();
@@ -213,6 +298,12 @@ public class MainController {
         btnAddConnection.setText(bundle.getString("button.add.connection"));
         calculateRoute.setText(bundle.getString("button.calculate.route"));
 
+        cmbSearchType.getItems().setAll(
+            bundle.getString("search.time"),
+            bundle.getString("search.transbords")
+        );
+
+        // Limpiar área de salida
         outputArea.clear();
 
         if (stage != null) {

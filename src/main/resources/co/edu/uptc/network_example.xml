@@ -15,6 +15,16 @@
                     <destinationId>3</destinationId>
                     <distance>7.5</distance>
                 </edge>
+                <edge>
+                    <sourceId>1</sourceId>
+                    <destinationId>3</destinationId>
+                    <distance>1.0</distance>
+                </edge>
+                <edge>
+                    <sourceId>1</sourceId>
+                    <destinationId>6</destinationId>
+                    <distance>4.0</distance>
+                </edge>
             </edges>
         </node>
         <node>
@@ -42,6 +52,16 @@
                     <destinationId>1</destinationId>
                     <distance>7.5</distance>
                 </edge>
+                <edge>
+                    <sourceId>3</sourceId>
+                    <destinationId>1</destinationId>
+                    <distance>1.0</distance>
+                </edge>
+                <edge>
+                    <sourceId>3</sourceId>
+                    <destinationId>6</destinationId>
+                    <distance>2.0</distance>
+                </edge>
             </edges>
         </node>
         <node>
@@ -52,6 +72,27 @@
                     <sourceId>4</sourceId>
                     <destinationId>2</destinationId>
                     <distance>3.2</distance>
+                </edge>
+            </edges>
+        </node>
+        <node>
+            <id>5</id>
+            <name>Estacion Noreste</name>
+            <edges/>
+        </node>
+        <node>
+            <id>6</id>
+            <name>Noroeste</name>
+            <edges>
+                <edge>
+                    <sourceId>6</sourceId>
+                    <destinationId>3</destinationId>
+                    <distance>2.0</distance>
+                </edge>
+                <edge>
+                    <sourceId>6</sourceId>
+                    <destinationId>1</destinationId>
+                    <distance>4.0</distance>
                 </edge>
             </edges>
         </node>
