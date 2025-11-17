@@ -7,11 +7,6 @@ import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Clase contenedora de nodos y conexiones, para serialización XML.
- * Sustituye el antiguo RouteTree del DAO.
- */
 @XmlRootElement(name = "graphData")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GraphData {

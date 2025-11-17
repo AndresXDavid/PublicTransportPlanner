@@ -9,11 +9,6 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 
-/**
- * Implementación de {@link RouteDAO} que utiliza JAXB para la
- * serialización y deserialización de objetos {@link GraphData}
- * en formato XML.
- */
 public class XmlRouteDAO implements RouteDAO {
 
     private static final Logger LOGGER = Logger.getLogger(XmlRouteDAO.class.getName());
@@ -29,7 +24,6 @@ public class XmlRouteDAO implements RouteDAO {
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
             File out = new File(filePath);
-            // Asegurar directorio padre exista
             File parent = out.getParentFile();
             if (parent != null && !parent.exists()) {
                 parent.mkdirs();
@@ -49,7 +43,6 @@ public class XmlRouteDAO implements RouteDAO {
         try {
             File f = new File(filePath);
             if (!f.exists()) {
-                // No consideramos esto una excepción crítica: retornamos null para indicar "no hay datos".
                 LOGGER.log(Level.INFO, "Archivo de persistencia no existe: " + filePath);
                 return null;
             }

@@ -22,7 +22,6 @@ public class Node {
     private List<Edge> edges = new ArrayList<>();
 
     public Node() {
-        // JAXB necesita constructor vacío
     }
 
     public Node(String id, String name) {

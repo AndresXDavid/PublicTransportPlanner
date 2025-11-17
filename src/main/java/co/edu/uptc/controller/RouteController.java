@@ -10,9 +10,6 @@ public class RouteController {
         this.graphController = graphController;
     }
 
-    /**
-     * Algoritmo de Dijkstra para ruta más corta
-     */
     public RouteResult findShortestRoute(String fromId, String toId) {
         Node start = graphController.getNode(fromId);
         Node end = graphController.getNode(toId);
@@ -47,7 +44,6 @@ public class RouteController {
             }
         }
 
-        // reconstruir la ruta
         List<Node> path = new ArrayList<>();
         for (Node at = end; at != null; at = previous.get(at)) {
             path.add(at);

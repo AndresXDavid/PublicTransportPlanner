@@ -42,5 +42,3 @@ public class Edge {
         return sourceId + " -> " + destinationId + " (" + distance + ")";
     }
 }
-
-
