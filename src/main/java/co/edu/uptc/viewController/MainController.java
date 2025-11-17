@@ -14,24 +14,20 @@ public class MainController {
 
     @FXML private TextArea outputArea;
 
-    // Campos de estaciones
     @FXML private TextField stationIdField;
     @FXML private TextField stationNameField;
     @FXML private Label lblAddStation;
 
-    // Campos de conexiones
     @FXML private TextField connFromField;
     @FXML private TextField connToField;
     @FXML private TextField connDistanceField;
     @FXML private Label lblAddConnection;
 
-    // Campos de ruta
     @FXML private TextField fromField;
     @FXML private TextField toField;
     @FXML private Label lblRoute;
     @FXML private Label lblto;
 
-    // Botones
     @FXML private Button btnLoadXml;
     @FXML private Button btnSaveXml;
     @FXML private Button btnShowNodes;
@@ -51,17 +47,14 @@ public class MainController {
 
     private final String DEFAULT_XML_PATH = "src/main/resources/co/edu/uptc/network_example.xml";
 
-    // Idioma actual y ResourceBundle
     private Locale currentLocale = Locale.getDefault();
     private ResourceBundle bundle = ResourceBundle.getBundle("co.edu.uptc.i18n.messages", currentLocale);
 
-    // Referencia al Stage
     private Stage stage;
 
-    // ========================== CONFIGURACIÓN ==========================
     public void setStage(Stage stage) {
         this.stage = stage;
-        updateTexts(); // Actualiza el título del stage la primera vez
+        updateTexts();
     }
 
     @FXML
@@ -85,7 +78,6 @@ public class MainController {
         updateTexts();
     }
 
-    // ========================== FUNCIONES DE GRAFO ==========================
     @FXML
     private void onLoadGraph() {
         // Crear el FileChooser
@@ -157,7 +149,6 @@ public class MainController {
         outputArea.setText(sb.toString());
     }
 
-    // ========================== FUNCIONES DE ESTACIONES ==========================
     @FXML
     private void onAddStation() {
         String id = stationIdField.getText().trim();
@@ -182,7 +173,6 @@ public class MainController {
         stationNameField.clear();
     }
 
-    // ========================== FUNCIONES DE CONEXIONES ==========================
     @FXML
     private void onAddConnection() {
         String from = connFromField.getText().trim();
@@ -216,7 +206,6 @@ public class MainController {
         }
     }
 
-    // ========================== FUNCIONES DE RUTA ==========================
     @FXML
     private void onCalculateRoute() {
         String fromId = fromField.getText().trim();
@@ -284,7 +273,6 @@ public class MainController {
         updateTexts();
     }
 
-    // ========================== ACTUALIZACIÓN DE TEXTOS ==========================
     private void updateTexts() {
         lblAddStation.setText(bundle.getString("label.add.station"));
         lblAddConnection.setText(bundle.getString("label.add.connection"));
@@ -318,7 +306,6 @@ public class MainController {
         // Limpiar área de salida
         outputArea.clear();
 
-        // Actualizar título del Stage
         if (stage != null) {
             stage.setTitle(bundle.getString("app.title"));
         }

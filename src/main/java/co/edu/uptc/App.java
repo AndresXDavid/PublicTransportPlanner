@@ -13,7 +13,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        // Cargar ResourceBundle inicial
+
         ResourceBundle bundle = ResourceBundle.getBundle("co.edu.uptc.i18n.messages", Locale.getDefault());
 
         FXMLLoader loader = new FXMLLoader(App.class.getResource("/co/edu/uptc/view/MainView.fxml"));
@@ -25,11 +25,9 @@ public class App extends Application {
         stage.setWidth(500);
         stage.setHeight(400);
 
-        // Pasar referencia del Stage al controlador para poder actualizar el título
         MainController controller = loader.getController();
         controller.setStage(stage);
 
-        // Título inicial
         stage.setTitle(bundle.getString("app.title"));
 
         stage.show();

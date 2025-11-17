@@ -5,11 +5,9 @@ module co.edu.uptc {
     requires jakarta.xml.bind;
     requires java.logging;
 
-    // Necesario para que FXMLLoader pueda acceder a las clases controladoras
     opens co.edu.uptc to javafx.fxml;
     opens co.edu.uptc.viewController to javafx.fxml;
 
-    // Necesario para JAXB pueda serializar/deserializar
     opens co.edu.uptc.controller to jakarta.xml.bind;
     opens co.edu.uptc.persistence to jakarta.xml.bind;
     opens co.edu.uptc.model to jakarta.xml.bind;
