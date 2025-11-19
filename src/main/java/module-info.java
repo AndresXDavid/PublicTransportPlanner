@@ -1,6 +1,7 @@
 module co.edu.uptc {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.web;
     requires javafx.graphics;
     requires jakarta.xml.bind;
     requires java.logging;

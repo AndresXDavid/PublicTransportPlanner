@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+          fx:controller="co.edu.uptc.viewController.RoutesController"
+          spacing="8" padding="10">
+
+     <HBox spacing="8" alignment="CENTER_LEFT">
+          <Label text="%label.route.from"/>
+          <ComboBox fx:id="cmbFrom" prefWidth="180"/>
+          <Label text="%label.route.to"/>
+          <ComboBox fx:id="cmbTo" prefWidth="180"/>
+          <Label text="%label.route.criteria"/>
+          <ComboBox fx:id="cmbCriteria" prefWidth="160"/>
+          <Button text="%button.calculate" onAction="#onCalculate" styleClass="button primary"/>
+     </HBox>
+
+     <SplitPane orientation="HORIZONTAL" prefHeight="520">
+          <AnchorPane>
+               <ListView fx:id="resultList" />
+          </AnchorPane>
+
+          <AnchorPane>
+               <VBox spacing="8" AnchorPane.topAnchor="8">
+                    <Label text="%label.route.details" styleClass="label title"/>
+                    <TextArea fx:id="routeDetails" editable="false" wrapText="true"/>
+                    <HBox spacing="8">
+                         <Button text="%button.showOnMap" onAction="#onShowOnMap" styleClass="button ghost"/>
+                         <Button text="%button.export" onAction="#onExport" styleClass="button ghost"/>
+                    </HBox>
+               </VBox>
+          </AnchorPane>
+     </SplitPane>
+</VBox>

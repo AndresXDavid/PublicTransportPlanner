@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+               fx:controller="co.edu.uptc.viewController.ConnectionsController">
+
+     <top>
+          <HBox spacing="8" padding="8">
+               <Button text="%button.new" onAction="#onNewConnection" styleClass="button primary"/>
+               <Button text="%button.delete" onAction="#onDeleteConnection" styleClass="button ghost"/>
+               <Region HBox.hgrow="ALWAYS"/>
+               <TextField fx:id="searchField" promptText="%prompt.search.connection"/>
+               <Button text="%button.search" onAction="#onSearch"/>
+          </HBox>
+     </top>
+
+     <center>
+          <TableView fx:id="connectionsTable" prefHeight="480">
+               <columns>
+                    <TableColumn fx:id="colFrom" text="%col.from" prefWidth="150"/>
+                    <TableColumn fx:id="colTo" text="%col.to" prefWidth="150"/>
+                    <TableColumn fx:id="colDistance" text="%col.distance" prefWidth="120"/>
+                    <TableColumn fx:id="colTime" text="%col.time" prefWidth="120"/>
+               </columns>
+          </TableView>
+     </center>
+
+     <bottom>
+          <AnchorPane prefHeight="160">
+               <VBox spacing="8" AnchorPane.leftAnchor="8" AnchorPane.topAnchor="8">
+                    <Label text="%label.connection.details" styleClass="label title"/>
+                    <GridPane hgap="8" vgap="8">
+                         <Label text="%col.from" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                         <ComboBox fx:id="cmbFrom" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                         <Label text="%col.to" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                         <ComboBox fx:id="cmbTo" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                         <Label text="%col.distance" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                         <TextField fx:id="distanceField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                         <Label text="%col.time" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                         <TextField fx:id="timeField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                    </GridPane>
+
+                    <HBox spacing="8">
+                         <Button text="%button.save" onAction="#onSaveConnection" styleClass="button primary"/>
+                         <Button text="%button.cancel" onAction="#onCancelEdit"/>
+                    </HBox>
+               </VBox>
+          </AnchorPane>
+     </bottom>
+</BorderPane>

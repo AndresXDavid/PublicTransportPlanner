@@ -1,48 +1,39 @@
 package co.edu.uptc.model;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-
-@XmlAccessorType(XmlAccessType.FIELD)
+/**
+ * Arista con id origen / destino, distancia y tiempo.
+ * Controladores esperan getters: getFromId(), getToId(), getDistance(), getTime()
+ */
 public class Edge {
-
-    @XmlElement
-    private String sourceId;
-
-    @XmlElement
-    private String destinationId;
-
-    @XmlElement
+    private String fromId;
+    private String toId;
     private double distance;
+    private double time; // opcional, si 0 se puede calcular desde distancia/speed
 
-    public Edge() {
-    }
+    public Edge() { }
 
-    public Edge(String sourceId, String destinationId, double distance) {
-        this.sourceId = sourceId;
-        this.destinationId = destinationId;
+    public Edge(String fromId, String toId, double distance, double time) {
+        this.fromId = fromId;
+        this.toId = toId;
         this.distance = distance;
+        this.time = time;
     }
 
-    public String getSourceId() {
-        return sourceId;
-    }
+    // getters / setters
+    public String getFromId() { return fromId; }
+    public void setFromId(String fromId) { this.fromId = fromId; }
 
-    public String getDestinationId() {
-        return destinationId;
-    }
+    public String getToId() { return toId; }
+    public void setToId(String toId) { this.toId = toId; }
 
-    public double getDistance() {
-        return distance;
-    }
+    public double getDistance() { return distance; }
+    public void setDistance(double distance) { this.distance = distance; }
 
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
+    public double getTime() { return time; }
+    public void setTime(double time) { this.time = time; }
 
     @Override
     public String toString() {
-        return sourceId + " -> " + destinationId + " (" + distance + ")";
+        return fromId + " -> " + toId + " (" + distance + ", t=" + time + ")";
     }
 }

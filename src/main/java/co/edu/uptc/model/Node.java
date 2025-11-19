@@ -1,85 +1,80 @@
 package co.edu.uptc.model;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlElementWrapper;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+/**
+ * Nodo (estación) con aristas salientes guardadas en un map (destinationId -> Edge).
+ */
 public class Node {
-
-    @XmlElement
     private String id;
-
-    @XmlElement
     private String name;
+    private Double latitude;   // nullable
+    private Double longitude;  // nullable
 
-    @XmlElementWrapper(name = "edges")
-    @XmlElement(name = "edge")
-    private List<Edge> edges = new ArrayList<>();
+    // edges keyed by destination node id
+    private Map<String, Edge> edges = new HashMap<>();
 
-    public Node() {
-    }
+    public Node() { }
 
     public Node(String id, String name) {
+        this(id, name, null, null);
+    }
+
+    public Node(String id, String name, Double latitude, Double longitude) {
         this.id = id;
         this.name = name;
-        this.edges = new ArrayList<>();
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
-    public void addEdge(Node destination, double distance) {
-        edges.add(new Edge(id, destination.getId(), distance));
+    // getters / setters
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public Double getLatitude() { return latitude; }
+    public void setLatitude(Double latitude) { this.latitude = latitude; }
+
+    public Double getLongitude() { return longitude; }
+    public void setLongitude(Double longitude) { this.longitude = longitude; }
+
+    // edges API
+    public void addEdge(String toId, double distance, double time) {
+        Edge e = new Edge(this.id, toId, distance, time);
+        edges.put(toId, e);
     }
 
-    public String getId() {
-        return id;
+    public void addEdge(Edge e) {
+        if (e == null) return;
+        edges.put(e.getToId(), e);
     }
 
-    public String getName() {
-        return name;
+    public boolean removeEdgeTo(String destinationId) {
+        return edges.remove(destinationId) != null;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public boolean updateEdgeDistance(String destinationId, double newDistance) {
+        Edge e = edges.get(destinationId);
+        if (e == null) return false;
+        e.setDistance(newDistance);
+        return true;
     }
 
-    public List<Edge> getEdges() {
-        if (edges == null) edges = new ArrayList<>();
-        return edges;
+    public Collection<Edge> getEdges() {
+        return edges.values();
     }
 
-    /**
-     * Elimina una arista que apunte a un nodo específico.
-     *
-     * @param nodeId ID del nodo destino de la arista a eliminar
-     * @return true si se eliminó alguna arista, false si no existía
-     */
-    public boolean removeEdgeTo(String nodeId) {
-        if (edges == null) return false;
-        return edges.removeIf(edge -> edge.getDestinationId().equals(nodeId));
-    }
+    public Edge getEdgeTo(String destinationId) { return edges.get(destinationId); }
 
-    /**
-     * Actualiza la distancia de la arista hacia un nodo específico.
-     *
-     * @param nodeId ID del nodo destino
-     * @param newDistance Nueva distancia de la arista (debe ser mayor que 0)
-     * @return true si se actualizó correctamente, false si no se encontró la arista
-     */
-    public boolean updateEdgeDistance(String nodeId, double newDistance) {
-        if (edges == null || newDistance <= 0) return false;
-        for (Edge edge : edges) {
-            if (edge.getDestinationId().equals(nodeId)) {
-                edge.setDistance(newDistance);
-                return true;
-            }
-        }
-        return false;
+    @Override
+    public String toString() {
+        return id + (name != null ? " - " + name : "");
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -92,10 +87,5 @@ public class Node {
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return name + " (" + id + ")";
     }
 }

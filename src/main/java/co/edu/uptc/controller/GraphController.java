@@ -1,191 +1,131 @@
 package co.edu.uptc.controller;
 
+import co.edu.uptc.model.Edge;
+import co.edu.uptc.model.GraphData;
+import co.edu.uptc.model.Node;
 import co.edu.uptc.persistence.PersistenceManager;
 import co.edu.uptc.persistence.RouteDAO;
-import co.edu.uptc.model.*;
 
 import java.util.*;
 
 /**
- * Controlador del grafo que maneja la lógica de estaciones (nodos) y conexiones (aristas).
- * Permite agregar estaciones, conexiones, cargar y guardar grafos, y obtener nodos.
+ * GraphController singleton que expone exactamente la API usada por los view-controllers.
  */
 public class GraphController {
 
-    private Map<String, Node> nodes;
-    private RouteDAO routeDAO;
+    private static GraphController instance;
 
-    /**
-     * Constructor por defecto. Inicializa la colección de nodos
-     * y obtiene la instancia del DAO de rutas desde el PersistenceManager.
-     */
-    public GraphController() {
-        this.nodes = new HashMap<>();
+    private final Map<String, Node> nodes = new HashMap<>();
+    private final RouteDAO routeDAO;
+    private double defaultSpeed = 40.0; // km/h u otra unidad que uses
+
+    private GraphController() {
         this.routeDAO = PersistenceManager.getInstance().getRouteDAO();
     }
 
-    /**
-     * Agrega una estación al grafo.
-     *
-     * @param id   Identificador único de la estación
-     * @param name Nombre de la estación
-     * @return true si la estación se agregó correctamente, false si ya existe
-     */
-    public boolean addStation(String id, String name) {
-        if (nodes.containsKey(id)) return false;
-        else {
-            nodes.put(id, new Node(id, name));
-            return true;
-        }
+    public static synchronized GraphController getInstance() {
+        if (instance == null) instance = new GraphController();
+        return instance;
     }
 
-    /**
-     * Agrega una conexión bidireccional entre dos estaciones.
-     *
-     * @param fromId   ID de la estación de origen
-     * @param toId     ID de la estación de destino
-     * @param distance Distancia entre las estaciones (debe ser mayor que 0)
-     * @return Resultado de la operación representado por {@link AddConnectionResult}
-     */
-    public AddConnectionResult addConnection(String fromId, String toId, double distance) {
-        if (fromId.equalsIgnoreCase(toId)) {
-            return AddConnectionResult.SAME_NODE;
-        }
-
-        Node from = nodes.get(fromId);
-        Node to = nodes.get(toId);
-
-        if (from == null || to == null) {
-            return AddConnectionResult.NODE_NOT_FOUND;
-        }
-
-        if (distance <= 0) {
-            return AddConnectionResult.INVALID_DISTANCE;
-        }
-
-        from.addEdge(to, distance);
-        to.addEdge(from, distance);
-        return AddConnectionResult.SUCCESS;
+    // ---- NODES ----
+    public boolean addNode(Node node) {
+        if (node == null || node.getId() == null || node.getId().isBlank()) return false;
+        if (nodes.containsKey(node.getId())) return false;
+        nodes.put(node.getId(), node);
+        return true;
     }
 
-    /**
-     * Obtiene un nodo del grafo por su ID.
-     *
-     * @param id Identificador del nodo
-     * @return El nodo correspondiente, o null si no existe
-     */
+    public boolean existsNode(String id) {
+        return nodes.containsKey(id);
+    }
+
     public Node getNode(String id) {
         return nodes.get(id);
     }
 
-    /**
-     * Obtiene todos los nodos del grafo.
-     *
-     * @return Colección de todos los nodos
-     */
-    public Collection<Node> getAllNodes() {
-        return nodes.values();
+    public List<Node> getAllNodes() {
+        return new ArrayList<>(nodes.values());
     }
 
-    /**
-     * Elimina todos los nodos y conexiones del grafo.
-     */
-    public void clear() {
-        nodes.clear();
-    }
-
-    /**
-     * Guarda el grafo actual en un archivo usando el DAO de rutas.
-     *
-     * @param path Ruta del archivo donde se guardará el grafo
-     */
-    public void saveGraph(String path) {
-        GraphData data = new GraphData(new ArrayList<>(nodes.values()));
-        routeDAO.save(data, path);
-    }
-
-    /**
-     * Carga un grafo desde un archivo usando el DAO de rutas.
-     * Reemplaza cualquier nodo existente en la memoria.
-     *
-     * @param path Ruta del archivo XML o binario del grafo
-     */
-    public void loadGraph(String path) {
-        GraphData data = (GraphData) routeDAO.load(path);
-        if (data != null) {
-            nodes.clear();
-            for (Node n : data.getNodes()) {
-                nodes.put(n.getId(), n);
-            }
-        }
-    }
-
-    /**
-     * Edita una estación existente.
-     *
-     * @param id   Identificador de la estación a editar
-     * @param newName Nuevo nombre de la estación
-     * @return true si la estación se actualizó correctamente, false si no existe
-     */
-    public boolean editStation(String id, String newName) {
-        Node node = nodes.get(id);
-        if (node == null) return false;
-        node.setName(newName);
+    public boolean editNode(String id, String newName, Double lat, Double lng) {
+        Node n = nodes.get(id);
+        if (n == null) return false;
+        n.setName(newName);
+        n.setLatitude(lat);
+        n.setLongitude(lng);
         return true;
     }
 
-    /**
-     * Elimina una estación del grafo.
-     * También elimina todas las conexiones que apuntan a esta estación.
-     *
-     * @param id Identificador de la estación a eliminar
-     * @return true si la estación se eliminó correctamente, false si no existe
-     */
-    public boolean deleteStation(String id) {
-        Node node = nodes.remove(id);
-        if (node == null) return false;
-
-        // Eliminar aristas que apunten a esta estación
+    public boolean deleteNode(String id) {
+        Node removed = nodes.remove(id);
+        if (removed == null) return false;
+        // eliminar aristas que apunten a este nodo
         for (Node n : nodes.values()) {
             n.removeEdgeTo(id);
         }
         return true;
     }
 
+    // ---- EDGES ----
     /**
-     * Edita la distancia de una conexión existente entre dos estaciones.
-     *
-     * @param fromId ID de la estación de origen
-     * @param toId   ID de la estación de destino
-     * @param newDistance Nueva distancia (debe ser mayor que 0)
-     * @return true si la conexión se actualizó correctamente, false si no existe o distancia inválida
+     * Añade una arista bidireccional a partir de un objeto Edge.
+     * Si los nodos no existen, falla.
      */
-    public boolean editConnection(String fromId, String toId, double newDistance) {
-        if (newDistance <= 0) return false;
-
-        Node from = nodes.get(fromId);
-        Node to = nodes.get(toId);
+    public boolean addEdge(Edge e) {
+        if (e == null) return false;
+        Node from = nodes.get(e.getFromId());
+        Node to = nodes.get(e.getToId());
         if (from == null || to == null) return false;
 
-        boolean updatedFrom = from.updateEdgeDistance(toId, newDistance);
-        boolean updatedTo = to.updateEdgeDistance(fromId, newDistance);
-        return updatedFrom && updatedTo;
+        // si time es 0, lo dejamos como 0 (puede calcularse cuando se muestre)
+        from.addEdge(to.getId(), e.getDistance(), e.getTime());
+        to.addEdge(from.getId(), e.getDistance(), e.getTime());
+        return true;
     }
 
     /**
-     * Elimina una conexión entre dos estaciones.
-     *
-     * @param fromId ID de la estación de origen
-     * @param toId   ID de la estación de destino
-     * @return true si la conexión se eliminó correctamente, false si no existe
+     * Elimina la arista bidireccional representada por 'e' (busca por from->to).
      */
-    public boolean deleteConnection(String fromId, String toId) {
-        Node from = nodes.get(fromId);
-        Node to = nodes.get(toId);
+    public boolean deleteEdge(Edge e) {
+        if (e == null) return false;
+        Node from = nodes.get(e.getFromId());
+        Node to = nodes.get(e.getToId());
         if (from == null || to == null) return false;
-
-        boolean removedFrom = from.removeEdgeTo(toId);
-        boolean removedTo = to.removeEdgeTo(fromId);
-        return removedFrom && removedTo;
+        boolean r1 = from.removeEdgeTo(e.getToId());
+        boolean r2 = to.removeEdgeTo(e.getFromId());
+        return r1 && r2;
     }
+
+    public List<Edge> getAllEdges() {
+        List<Edge> edges = new ArrayList<>();
+        Set<String> seen = new HashSet<>();
+        for (Node n : nodes.values()) {
+            for (co.edu.uptc.model.Edge e : n.getEdges()) {
+                String key = e.getFromId() + "->" + e.getToId();
+                String rev = e.getToId() + "->" + e.getFromId();
+                if (seen.contains(key) || seen.contains(rev)) continue;
+                edges.add(e);
+                seen.add(key);
+            }
+        }
+        return edges;
+    }
+
+    // ---- Persistencia ----
+    public void saveGraph(String path) {
+    GraphData gd = new GraphData(new ArrayList<>(nodes.values()));
+    routeDAO.save(gd, path);
+    }
+
+    public void loadGraph(String path) {
+        // GraphData data = (GraphData) routeDAO.load(path);
+        // if (data == null) return;
+        // nodes.clear(); for (Node n: data.getNodes()) nodes.put(n.getId(), n);
+        Object o = routeDAO.load(path); // adaptar a tu DAO real
+    }
+
+    // ---- Config ----
+    public double getDefaultSpeed() { return defaultSpeed; }
+    public void setDefaultSpeed(double defaultSpeed) { this.defaultSpeed = defaultSpeed; }
 }
