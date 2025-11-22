@@ -1,6 +1,7 @@
 package co.edu.uptc.viewController;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import co.edu.uptc.controller.GraphController;
@@ -144,6 +145,18 @@ public class StationsController {
                          .collect(Collectors.toList());
           }
           stationsTable.getItems().setAll(list);
+     }
+
+     @FXML
+     private void onCancelEdit(ActionEvent event) {
+          co.edu.uptc.model.Node sel = stationsTable.getSelectionModel().getSelectedItem();
+          if (sel != null) {
+               // si había una selección, restaurar sus valores en el formulario
+               loadToForm(sel);
+          } else {
+               // si no había selección (se estaba creando uno nuevo), limpiar el formulario
+               clearForm();
+          }
      }
 
      private void showAlert(Alert.AlertType type, String msg) {

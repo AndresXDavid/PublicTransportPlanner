@@ -1,6 +1,7 @@
 package co.edu.uptc.viewController;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import co.edu.uptc.controller.GraphController;
@@ -49,6 +50,28 @@ public class ConnectionsController {
      }
 
      @FXML
+     private void onDeleteConnection() {
+          Edge sel = connectionsTable.getSelectionModel().getSelectedItem();
+          if (sel == null) {
+               showAlert(Alert.AlertType.WARNING, bundle.getString("error.select.row"));
+               return;
+          }
+          graphController.deleteEdge(sel);
+          refreshData();
+          showAlert(Alert.AlertType.INFORMATION, bundle.getString("info.connection.deleted"));
+     }
+
+     @FXML
+     private void onSearch() {
+          String q = searchField.getText().trim().toLowerCase();
+          List<Edge> edges = graphController.getAllEdges();
+          if (!q.isEmpty()) {
+               edges = edges.stream().filter(e -> e.getFromId().toLowerCase().contains(q) || e.getToId().toLowerCase().contains(q)).collect(Collectors.toList());
+          }
+          connectionsTable.getItems().setAll(edges);
+     }
+
+     @FXML
      private void onSaveConnection() {
           String from = cmbFrom.getValue();
           String to = cmbTo.getValue();
@@ -76,25 +99,18 @@ public class ConnectionsController {
      }
 
      @FXML
-     private void onDeleteConnection() {
+     private void onCancelEdit(ActionEvent event) {
           Edge sel = connectionsTable.getSelectionModel().getSelectedItem();
-          if (sel == null) {
-               showAlert(Alert.AlertType.WARNING, bundle.getString("error.select.row"));
-               return;
+          if (sel != null) {
+               // si había una selección, restaurar sus valores en el formulario
+               cmbFrom.setValue(sel.getFromId());
+               cmbTo.setValue(sel.getToId());
+               distanceField.setText(String.valueOf(sel.getDistance()));
+               timeField.setText(String.valueOf(sel.getTime()));
+          } else {
+               // si no había selección (se estaba creando uno nuevo), limpiar el formulario
+               clearForm();
           }
-          graphController.deleteEdge(sel);
-          refreshData();
-          showAlert(Alert.AlertType.INFORMATION, bundle.getString("info.connection.deleted"));
-     }
-
-     @FXML
-     private void onSearch() {
-          String q = searchField.getText().trim().toLowerCase();
-          List<Edge> edges = graphController.getAllEdges();
-          if (!q.isEmpty()) {
-               edges = edges.stream().filter(e -> e.getFromId().toLowerCase().contains(q) || e.getToId().toLowerCase().contains(q)).collect(Collectors.toList());
-          }
-          connectionsTable.getItems().setAll(edges);
      }
 
      private void clearForm() {

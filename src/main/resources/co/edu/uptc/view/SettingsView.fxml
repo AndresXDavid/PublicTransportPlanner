@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.TextField?>
+
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="co.edu.uptc.viewController.SettingsController" spacing="10" padding="10">
+     <Label text="%label.settings" styleClass="label title"/>
+     <HBox spacing="8">
+          <Label text="%label.default.speed"/>
+          <TextField fx:id="speedField" prefWidth="80"/>
+          <Button text="%button.save" onAction="#onSaveSettings" styleClass="button primary"/>
+     </HBox>
+</VBox>
