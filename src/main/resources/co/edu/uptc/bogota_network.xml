@@ -13,7 +13,6 @@
                          <fromId>PORTAL_NORTE</fromId>
                          <toId>TOBERLIN</toId>
                          <distance>1.8</distance>
-                         <time>3.0</time>
                     </edge>
                </edges>
           </node>
@@ -28,13 +27,11 @@
                          <fromId>TOBERLIN</fromId>
                          <toId>PORTAL_NORTE</toId>
                          <distance>1.8</distance>
-                         <time>3.0</time>
                     </edge>
                     <edge>
                          <fromId>TOBERLIN</fromId>
                          <toId>CARDIO_INFANTIL</toId>
                          <distance>1.2</distance>
-                         <time>2.5</time>
                     </edge>
                </edges>
           </node>
@@ -49,13 +46,11 @@
                          <fromId>CARDIO_INFANTIL</fromId>
                          <toId>TOBERLIN</toId>
                          <distance>1.2</distance>
-                         <time>2.5</time>
                     </edge>
                     <edge>
                          <fromId>CARDIO_INFANTIL</fromId>
                          <toId>PRADO</toId>
                          <distance>1.5</distance>
-                         <time>2.8</time>
                     </edge>
                </edges>
           </node>
@@ -70,13 +65,11 @@
                          <fromId>PRADO</fromId>
                          <toId>CARDIO_INFANTIL</toId>
                          <distance>1.5</distance>
-                         <time>2.8</time>
                     </edge>
                     <edge>
                          <fromId>PRADO</fromId>
                          <toId>CALLE_100</toId>
                          <distance>1.3</distance>
-                         <time>2.5</time>
                     </edge>
                </edges>
           </node>
@@ -91,13 +84,11 @@
                          <fromId>CALLE_100</fromId>
                          <toId>PRADO</toId>
                          <distance>1.3</distance>
-                         <time>2.5</time>
                     </edge>
                     <edge>
                          <fromId>CALLE_100</fromId>
                          <toId>VIRREY</toId>
                          <distance>0.9</distance>
-                         <time>2.0</time>
                     </edge>
                </edges>
           </node>
@@ -112,13 +103,11 @@
                          <fromId>VIRREY</fromId>
                          <toId>CALLE_100</toId>
                          <distance>0.9</distance>
-                         <time>2.0</time>
                     </edge>
                     <edge>
                          <fromId>VIRREY</fromId>
                          <toId>HEROES</toId>
                          <distance>1.1</distance>
-                         <time>2.3</time>
                     </edge>
                </edges>
           </node>
@@ -133,13 +122,11 @@
                          <fromId>HEROES</fromId>
                          <toId>VIRREY</toId>
                          <distance>1.1</distance>
-                         <time>2.3</time>
                     </edge>
                     <edge>
                          <fromId>HEROES</fromId>
                          <toId>CALLE_76</toId>
                          <distance>0.8</distance>
-                         <time>1.8</time>
                     </edge>
                </edges>
           </node>
@@ -154,13 +141,11 @@
                          <fromId>CALLE_76</fromId>
                          <toId>HEROES</toId>
                          <distance>0.8</distance>
-                         <time>1.8</time>
                     </edge>
                     <edge>
                          <fromId>CALLE_76</fromId>
                          <toId>CALLE_72</toId>
                          <distance>0.5</distance>
-                         <time>1.5</time>
                     </edge>
                </edges>
           </node>
@@ -175,13 +160,11 @@
                          <fromId>CALLE_72</fromId>
                          <toId>CALLE_76</toId>
                          <distance>0.5</distance>
-                         <time>1.5</time>
                     </edge>
                     <edge>
                          <fromId>CALLE_72</fromId>
                          <toId>FLORES</toId>
                          <distance>0.7</distance>
-                         <time>1.8</time>
                     </edge>
                </edges>
           </node>
@@ -196,13 +179,11 @@
                          <fromId>FLORES</fromId>
                          <toId>CALLE_72</toId>
                          <distance>0.7</distance>
-                         <time>1.8</time>
                     </edge>
                     <edge>
                          <fromId>FLORES</fromId>
                          <toId>CENTRO_MEMORIA</toId>
                          <distance>1.2</distance>
-                         <time>2.5</time>
                     </edge>
                </edges>
           </node>
@@ -217,13 +198,11 @@
                          <fromId>CENTRO_MEMORIA</fromId>
                          <toId>FLORES</toId>
                          <distance>1.2</distance>
-                         <time>2.5</time>
                     </edge>
                     <edge>
                          <fromId>CENTRO_MEMORIA</fromId>
                          <toId>MARLY</toId>
                          <distance>0.9</distance>
-                         <time>2.0</time>
                     </edge>
                </edges>
           </node>
@@ -238,13 +217,11 @@
                          <fromId>MARLY</fromId>
                          <toId>CENTRO_MEMORIA</toId>
                          <distance>0.9</distance>
-                         <time>2.0</time>
                     </edge>
                     <edge>
                          <fromId>MARLY</fromId>
                          <toId>CALLE_45</toId>
                          <distance>1.0</distance>
-                         <time>2.2</time>
                     </edge>
                </edges>
           </node>
@@ -259,13 +236,11 @@
                          <fromId>CALLE_45</fromId>
                          <toId>MARLY</toId>
                          <distance>1.0</distance>
-                         <time>2.2</time>
                     </edge>
                     <edge>
                          <fromId>CALLE_45</fromId>
                          <toId>PROFAMILIA</toId>
                          <distance>0.8</distance>
-                         <time>1.8</time>
                     </edge>
                </edges>
           </node>
@@ -280,13 +255,11 @@
                          <fromId>PROFAMILIA</fromId>
                          <toId>CALLE_45</toId>
                          <distance>0.8</distance>
-                         <time>1.8</time>
                     </edge>
                     <edge>
                          <fromId>PROFAMILIA</fromId>
                          <toId>CALLE_26</toId>
                          <distance>1.4</distance>
-                         <time>2.8</time>
                     </edge>
                </edges>
           </node>
@@ -301,19 +274,16 @@
                          <fromId>CALLE_26</fromId>
                          <toId>PROFAMILIA</toId>
                          <distance>1.4</distance>
-                         <time>2.8</time>
                     </edge>
                     <edge>
                          <fromId>CALLE_26</fromId>
                          <toId>LAS_AGUAS</toId>
                          <distance>1.0</distance>
-                         <time>2.2</time>
                     </edge>
                     <edge>
                          <fromId>CALLE_26</fromId>
                          <toId>CALLE_19</toId>
                          <distance>0.9</distance>
-                         <time>2.0</time>
                     </edge>
                </edges>
           </node>
@@ -328,13 +298,11 @@
                          <fromId>LAS_AGUAS</fromId>
                          <toId>CALLE_26</toId>
                          <distance>1.0</distance>
-                         <time>2.2</time>
                     </edge>
                     <edge>
                          <fromId>LAS_AGUAS</fromId>
                          <toId>MUSEO_NACIONAL</toId>
                          <distance>0.7</distance>
-                         <time>1.7</time>
                     </edge>
                </edges>
           </node>
@@ -349,13 +317,11 @@
                          <fromId>MUSEO_NACIONAL</fromId>
                          <toId>LAS_AGUAS</toId>
                          <distance>0.7</distance>
-                         <time>1.7</time>
                     </edge>
                     <edge>
                          <fromId>MUSEO_NACIONAL</fromId>
                          <toId>TERREROS</toId>
                          <distance>1.1</distance>
-                         <time>2.3</time>
                     </edge>
                </edges>
           </node>
@@ -370,13 +336,11 @@
                          <fromId>TERREROS</fromId>
                          <toId>MUSEO_NACIONAL</toId>
                          <distance>1.1</distance>
-                         <time>2.3</time>
                     </edge>
                     <edge>
                          <fromId>TERREROS</fromId>
                          <toId>JIMENEZ</toId>
                          <distance>0.8</distance>
-                         <time>1.9</time>
                     </edge>
                </edges>
           </node>
@@ -391,19 +355,16 @@
                          <fromId>JIMENEZ</fromId>
                          <toId>TERREROS</toId>
                          <distance>0.8</distance>
-                         <time>1.9</time>
                     </edge>
                     <edge>
                          <fromId>JIMENEZ</fromId>
                          <toId>UNIVERSIDADES</toId>
                          <distance>0.6</distance>
-                         <time>1.5</time>
                     </edge>
                     <edge>
                          <fromId>JIMENEZ</fromId>
                          <toId>MUSEO_ORO</toId>
                          <distance>0.5</distance>
-                         <time>1.3</time>
                     </edge>
                </edges>
           </node>
@@ -418,13 +379,11 @@
                          <fromId>UNIVERSIDADES</fromId>
                          <toId>JIMENEZ</toId>
                          <distance>0.6</distance>
-                         <time>1.5</time>
                     </edge>
                     <edge>
                          <fromId>UNIVERSIDADES</fromId>
                          <toId>RICAURTE</toId>
                          <distance>1.2</distance>
-                         <time>2.5</time>
                     </edge>
                </edges>
           </node>
@@ -439,13 +398,11 @@
                          <fromId>RICAURTE</fromId>
                          <toId>UNIVERSIDADES</toId>
                          <distance>1.2</distance>
-                         <time>2.5</time>
                     </edge>
                     <edge>
                          <fromId>RICAURTE</fromId>
                          <toId>CALLE_6</toId>
                          <distance>1.0</distance>
-                         <time>2.2</time>
                     </edge>
                </edges>
           </node>
@@ -460,13 +417,11 @@
                          <fromId>CALLE_6</fromId>
                          <toId>RICAURTE</toId>
                          <distance>1.0</distance>
-                         <time>2.2</time>
                     </edge>
                     <edge>
                          <fromId>CALLE_6</fromId>
                          <toId>NQS_CALLE_1</toId>
                          <distance>0.8</distance>
-                         <time>1.8</time>
                     </edge>
                </edges>
           </node>
@@ -481,13 +436,11 @@
                          <fromId>NQS_CALLE_1</fromId>
                          <toId>CALLE_6</toId>
                          <distance>0.8</distance>
-                         <time>1.8</time>
                     </edge>
                     <edge>
                          <fromId>NQS_CALLE_1</fromId>
                          <toId>PORTAL_SUR</toId>
                          <distance>2.5</distance>
-                         <time>4.0</time>
                     </edge>
                </edges>
           </node>
@@ -502,7 +455,6 @@
                          <fromId>PORTAL_SUR</fromId>
                          <toId>NQS_CALLE_1</toId>
                          <distance>2.5</distance>
-                         <time>4.0</time>
                     </edge>
                </edges>
           </node>
@@ -519,13 +471,11 @@
                          <fromId>MUSEO_ORO</fromId>
                          <toId>JIMENEZ</toId>
                          <distance>0.5</distance>
-                         <time>1.3</time>
                     </edge>
                     <edge>
                          <fromId>MUSEO_ORO</fromId>
                          <toId>CALLE_19</toId>
                          <distance>1.0</distance>
-                         <time>2.2</time>
                     </edge>
                </edges>
           </node>
@@ -540,13 +490,11 @@
                          <fromId>CALLE_19</fromId>
                          <toId>MUSEO_ORO</toId>
                          <distance>1.0</distance>
-                         <time>2.2</time>
                     </edge>
                     <edge>
                          <fromId>CALLE_19</fromId>
                          <toId>CALLE_26</toId>
                          <distance>0.9</distance>
-                         <time>2.0</time>
                     </edge>
                </edges>
           </node>

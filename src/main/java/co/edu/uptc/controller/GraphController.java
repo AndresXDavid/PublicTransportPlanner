@@ -17,7 +17,7 @@ public class GraphController {
 
     private final Map<String, Node> nodes = new HashMap<>();
     private final RouteDAO routeDAO;
-    private double defaultSpeed = 40.0; // km/h
+    private double defaultSpeed = 10.0; // km/h
 
     private GraphController() {
         this.routeDAO = PersistenceManager.getInstance().getRouteDAO();
@@ -79,8 +79,8 @@ public class GraphController {
         if (from == null || to == null) return false;
 
         // Añadir arista bidireccional
-        from.addEdge(to.getId(), e.getDistance(), e.getTime());
-        to.addEdge(from.getId(), e.getDistance(), e.getTime());
+        from.addEdge(to.getId(), e.getDistance());
+        to.addEdge(from.getId(), e.getDistance());
         return true;
     }
 

@@ -22,7 +22,6 @@
                     <TableColumn fx:id="colFrom" text="%col.from" prefWidth="150"/>
                     <TableColumn fx:id="colTo" text="%col.to" prefWidth="150"/>
                     <TableColumn fx:id="colDistance" text="%col.distance" prefWidth="120"/>
-                    <TableColumn fx:id="colTime" text="%col.time" prefWidth="120"/>
                </columns>
           </TableView>
      </center>
@@ -45,9 +44,9 @@
 
                          <Label text="%col.distance" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
                          <TextField fx:id="distanceField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                         <Label text="km" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
 
-                         <Label text="%col.time" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                         <TextField fx:id="timeField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
                     </GridPane>
 
                     <HBox spacing="8">

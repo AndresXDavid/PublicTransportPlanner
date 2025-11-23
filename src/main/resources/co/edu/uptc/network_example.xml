@@ -6,7 +6,23 @@
             <name>Estación Central</name>
             <latitude>4.65</latitude>
             <longitude>-74.05</longitude>
-            <edges/>
+            <edges>
+                <edge>
+                    <fromId>1</fromId>
+                    <toId>2</toId>
+                    <distance>5.0</distance>
+                </edge>
+                <edge>
+                    <fromId>1</fromId>
+                    <toId>3</toId>
+                    <distance>8.0</distance>
+                </edge>
+                <edge>
+                    <fromId>1</fromId>
+                    <toId>4</toId>
+                    <distance>12.0</distance>
+                </edge>
+            </edges>
         </node>
         <node>
             <id>2</id>
@@ -16,15 +32,23 @@
             <edges>
                 <edge>
                     <fromId>2</fromId>
+                    <toId>1</toId>
+                    <distance>5.0</distance>
+                </edge>
+                <edge>
+                    <fromId>2</fromId>
                     <toId>3</toId>
                     <distance>12.0</distance>
-                    <time>23.0</time>
                 </edge>
                 <edge>
                     <fromId>2</fromId>
                     <toId>4</toId>
                     <distance>15.0</distance>
-                    <time>22.0</time>
+                </edge>
+                <edge>
+                    <fromId>2</fromId>
+                    <toId>5</toId>
+                    <distance>7.0</distance>
                 </edge>
             </edges>
         </node>
@@ -36,15 +60,23 @@
             <edges>
                 <edge>
                     <fromId>3</fromId>
+                    <toId>1</toId>
+                    <distance>8.0</distance>
+                </edge>
+                <edge>
+                    <fromId>3</fromId>
                     <toId>2</toId>
                     <distance>12.0</distance>
-                    <time>23.0</time>
                 </edge>
                 <edge>
                     <fromId>3</fromId>
                     <toId>4</toId>
                     <distance>1.0</distance>
-                    <time>2.0</time>
+                </edge>
+                <edge>
+                    <fromId>3</fromId>
+                    <toId>6</toId>
+                    <distance>6.0</distance>
                 </edge>
             </edges>
         </node>
@@ -56,31 +88,66 @@
             <edges>
                 <edge>
                     <fromId>4</fromId>
+                    <toId>1</toId>
+                    <distance>12.0</distance>
+                </edge>
+                <edge>
+                    <fromId>4</fromId>
                     <toId>2</toId>
                     <distance>15.0</distance>
-                    <time>22.0</time>
                 </edge>
                 <edge>
                     <fromId>4</fromId>
                     <toId>3</toId>
                     <distance>1.0</distance>
-                    <time>2.0</time>
+                </edge>
+                <edge>
+                    <fromId>4</fromId>
+                    <toId>5</toId>
+                    <distance>3.0</distance>
                 </edge>
             </edges>
         </node>
         <node>
             <id>5</id>
-            <name>Estacion Noreste</name>
+            <name>Estación Noreste</name>
             <latitude>4.7</latitude>
             <longitude>-74.01</longitude>
-            <edges/>
+            <edges>
+                <edge>
+                    <fromId>5</fromId>
+                    <toId>2</toId>
+                    <distance>7.0</distance>
+                </edge>
+                <edge>
+                    <fromId>5</fromId>
+                    <toId>4</toId>
+                    <distance>3.0</distance>
+                </edge>
+                <edge>
+                    <fromId>5</fromId>
+                    <toId>6</toId>
+                    <distance>10.0</distance>
+                </edge>
+            </edges>
         </node>
         <node>
             <id>6</id>
-            <name>Noroeste</name>
+            <name>Estación Noroeste</name>
             <latitude>4.67</latitude>
             <longitude>-74.08</longitude>
-            <edges/>
+            <edges>
+                <edge>
+                    <fromId>6</fromId>
+                    <toId>3</toId>
+                    <distance>6.0</distance>
+                </edge>
+                <edge>
+                    <fromId>6</fromId>
+                    <toId>5</toId>
+                    <distance>10.0</distance>
+                </edge>
+            </edges>
         </node>
     </nodes>
 </graphData>

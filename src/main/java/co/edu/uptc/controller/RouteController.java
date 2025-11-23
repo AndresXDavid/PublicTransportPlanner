@@ -37,32 +37,42 @@ public class RouteController {
         if (start == null || end == null) return null;
 
         Map<String, Double> dist = new HashMap<>();
+        Map<String, Double> timeMap = new HashMap<>();
         Map<String, String> prev = new HashMap<>();
+
+        double defaultSpeed = graphController.getDefaultSpeed(); // velocidad actual del programa
+
         for (Node n : graphController.getAllNodes()) {
             dist.put(n.getId(), Double.POSITIVE_INFINITY);
+            timeMap.put(n.getId(), Double.POSITIVE_INFINITY);
             prev.put(n.getId(), null);
         }
-        dist.put(start.getId(), 0.0);
 
-        PriorityQueue<String> pq = new PriorityQueue<>(Comparator.comparingDouble(dist::get));
+        dist.put(start.getId(), 0.0);
+        timeMap.put(start.getId(), 0.0);
+
+        PriorityQueue<String> pq = new PriorityQueue<>(Comparator.comparingDouble(useTime ? timeMap::get : dist::get));
         pq.add(start.getId());
 
         while (!pq.isEmpty()) {
             String curId = pq.poll();
-            double curD = dist.get(curId);
-            if (Double.isInfinite(curD)) break;
-            if (curId.equals(end.getId())) break;
-
             Node cur = graphController.getNode(curId);
             if (cur == null) continue;
+            if (curId.equals(end.getId())) break;
 
             for (Edge e : cur.getEdges()) {
                 String nb = e.getToId();
-                double w = useTime ? (e.getTime() > 0 ? e.getTime() : e.getDistance() / Math.max(1.0, graphController.getDefaultSpeed()))
-                                : e.getDistance();
-                double alt = curD + w;
-                if (alt < dist.get(nb)) {
-                    dist.put(nb, alt);
+
+                double edgeDist = e.getDistance();
+                // siempre usar la velocidad actual si edgeTime <= 0
+                double edgeTime = e.getDistance() / graphController.getDefaultSpeed();
+
+                double altDist = dist.get(curId) + edgeDist;
+                double altTime = timeMap.get(curId) + edgeTime;
+
+                if ((useTime && altTime < timeMap.get(nb)) || (!useTime && altDist < dist.get(nb))) {
+                    dist.put(nb, altDist);
+                    timeMap.put(nb, altTime);
                     prev.put(nb, curId);
                     pq.remove(nb);
                     pq.add(nb);
@@ -71,7 +81,7 @@ public class RouteController {
         }
 
         if (Double.isInfinite(dist.get(end.getId()))) {
-            return new RouteResult(Collections.emptyList(), Double.POSITIVE_INFINITY, -1, -1.0);
+            return new RouteResult(Collections.emptyList(), 0.0, -1, -1.0);
         }
 
         List<Node> path = new ArrayList<>();
@@ -83,11 +93,11 @@ public class RouteController {
         }
         Collections.reverse(path);
 
-        double finalDist = dist.get(end.getId());
+        double totalDistance = dist.get(end.getId());
+        double totalTime = timeMap.get(end.getId());
         int transfers = Math.max(0, path.size() - 1);
-        double time = useTime ? finalDist : -1.0;
 
-        return new RouteResult(path, finalDist, transfers, time);
+        return new RouteResult(path, totalDistance, transfers, totalTime);
     }
 
     public RouteResult findFewestTransfers(String fromId, String toId) {
@@ -103,9 +113,11 @@ public class RouteController {
             steps.put(n.getId(), Integer.MAX_VALUE);
             prev.put(n.getId(), null);
         }
+
         steps.put(start.getId(), 0);
         q.add(start.getId());
 
+        // BFS para minimizar transbordos
         while (!q.isEmpty()) {
             String cur = q.poll();
             if (cur.equals(end.getId())) break;
@@ -123,9 +135,10 @@ public class RouteController {
         }
 
         if (steps.get(end.getId()) == Integer.MAX_VALUE) {
-            return new RouteResult(Collections.emptyList(), Double.POSITIVE_INFINITY, -1, -1.0);
+            return new RouteResult(Collections.emptyList(), 0.0, -1, -1.0);
         }
 
+        // Reconstruir path
         List<Node> path = new ArrayList<>();
         String at = end.getId();
         while (at != null) {
@@ -135,14 +148,24 @@ public class RouteController {
         }
         Collections.reverse(path);
 
+        // Calcular distancia y tiempo usando velocidad actual
         double totalDistance = 0.0;
+        double totalTime = 0.0;
+
         for (int i = 0; i < path.size() - 1; i++) {
             Node a = path.get(i);
             Node b = path.get(i + 1);
-            Edge e = a.getEdgeTo(b.getId());
-            if (e != null) totalDistance += e.getDistance();
+            Edge edge = a.getEdges().stream()
+                        .filter(e -> e.getToId().equals(b.getId()))
+                        .findFirst()
+                        .orElse(null);
+            if (edge != null) {
+                totalDistance += edge.getDistance();
+                totalTime += edge.getDistance() / graphController.getDefaultSpeed();
+            }
         }
+
         int transfers = Math.max(0, path.size() - 1);
-        return new RouteResult(path, totalDistance, transfers, -1.0);
+        return new RouteResult(path, totalDistance, transfers, totalTime);
     }
 }

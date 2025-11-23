@@ -110,6 +110,26 @@
      -fx-background-color: -gray-100;
 }
 
+/* Evita que los tabs muestren foco al ser seleccionados */
+.tab-pane .tab {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.tab-pane .tab:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-background-insets: 0;
+}
+
+/* También quitarlo del label interno */
+.tab-pane .tab:focused .tab-label {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+
 /* ============================================
      BOTONES
    ============================================ */
@@ -481,4 +501,18 @@
      -fx-border-radius: 12;
      -fx-background-radius: 12;
      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 2);
+}
+
+/* ============================================
+     ICONOS
+   ============================================ */
+
+.stat-icon {
+    -fx-font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", "Twemoji Mozilla", "Segoe UI Symbol";
+    -fx-font-size: 24px;
+}
+
+.emoji-label {
+    -fx-font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", "Twemoji Mozilla", "Segoe UI Symbol";
+    -fx-font-size: 16px; /* Ajusta según necesites */
 }

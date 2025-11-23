@@ -22,32 +22,32 @@
           <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE">
                <tabs>
                     <!-- Dashboard Tab -->
-                    <Tab text="%tab.dashboard" closable="false" fx:id="tabDashboard">
+                    <Tab text="%tab.dashboard" closable="false" fx:id="tabDashboard" styleClass="emoji-label">
                          <AnchorPane fx:id="dashboardContainer"/>
                     </Tab>
 
                     <!-- Stations Tab -->
-                    <Tab text="%tab.stations" fx:id="tabStations" closable="false">
+                    <Tab text="%tab.stations" fx:id="tabStations" closable="false" styleClass="emoji-label">
                          <AnchorPane fx:id="stationsContainer"/>
                     </Tab>
 
                     <!-- Connections Tab -->
-                    <Tab text="%tab.connections" fx:id="tabConnections" closable="false">
+                    <Tab text="%tab.connections" fx:id="tabConnections" closable="false" styleClass="emoji-label">
                          <AnchorPane fx:id="connectionsContainer"/>
                     </Tab>
 
                     <!-- Routes Tab -->
-                    <Tab text="%tab.routes" fx:id="tabRoutes" closable="false">
+                    <Tab text="%tab.routes" fx:id="tabRoutes" closable="false" styleClass="emoji-label">
                          <AnchorPane fx:id="routesContainer"/>
                     </Tab>
 
                     <!-- Map Tab -->
-                    <Tab text="%tab.map" fx:id="tabMap" closable="false">
+                    <Tab text="%tab.map" fx:id="tabMap" closable="false" styleClass="emoji-label">
                          <AnchorPane fx:id="mapContainer"/>
                     </Tab>
 
                     <!-- Settings Tab -->
-                    <Tab text="%tab.settings" fx:id="tabSettings" closable="false">
+                    <Tab text="%tab.settings" fx:id="tabSettings" closable="false" styleClass="emoji-label">
                          <AnchorPane fx:id="settingsContainer"/>
                     </Tab>
                </tabs>

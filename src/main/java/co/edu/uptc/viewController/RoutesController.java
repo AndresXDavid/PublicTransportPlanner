@@ -26,7 +26,11 @@ public class RoutesController {
           routeController = RouteController.getInstance();
 
           // criterios
-          cmbCriteria.getItems().addAll("Distancia", "Tiempo", "Transbordos");
+          cmbCriteria.getItems().addAll(
+               bundle.getString("criteria.time"),
+               bundle.getString("criteria.transfers")
+          );
+
           refreshNodes();
      }
 
@@ -46,13 +50,12 @@ public class RoutesController {
                return;
           }
           RouteResult rr = null;
-          if (crit.equals("Distancia")) {
-               rr = routeController.findShortestByDistance(from, to);
-          } else if (crit.equals("Tiempo")) {
+          if (crit.equals(bundle.getString("criteria.time"))) {
                rr = routeController.findShortestByTime(from, to);
-          } else {
+          } else if (crit.equals(bundle.getString("criteria.transfers"))) {
                rr = routeController.findFewestTransfers(from, to);
           }
+
 
           if (rr == null || rr.getPath().isEmpty()) {
                showAlert(Alert.AlertType.INFORMATION, bundle.getString("info.no.route"));
@@ -61,8 +64,29 @@ public class RoutesController {
                return;
           }
 
-          resultList.getItems().setAll(rr.getPath().stream().map(n -> n.getId()).toList());
-          routeDetails.setText("Distancia: " + rr.getDistance() + "\nTiempo: " + rr.getTime() + "\nTransbordos: " + rr.getTransfers());
+          resultList.getItems().setAll(
+          rr.getPath().stream()
+               .map(n -> bundle.getString("label.node") + " " + n.getId() + ": " + n.getName())
+               .toList()
+          );
+
+          double timeInHours = rr.getTime();
+          int hours = (int) timeInHours;
+          int minutes = (int) Math.round((timeInHours - hours) * 60);
+
+          String timeText;
+          if (hours > 0) {
+          timeText = hours + " h";
+          if (minutes > 0) timeText += " " + minutes + " min";
+          } else {
+          timeText = minutes + " min";
+          }
+
+          routeDetails.setText(
+          bundle.getString("label.distance") + ": " + rr.getDistance() + " km\n" +
+          bundle.getString("label.time") + ": " + timeText + "\n" +
+          bundle.getString("label.transfers") + ": " + rr.getTransfers()
+          );
      }
 
      @FXML

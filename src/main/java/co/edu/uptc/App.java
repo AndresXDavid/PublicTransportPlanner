@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import co.edu.uptc.viewController.MainController;
@@ -57,6 +58,12 @@ public class App extends Application {
         stage.setWidth(1000);
         stage.setHeight(700);
         stage.show();
+
+        // --- 10. Icono del programa ---
+        URL iconUrl = getClass().getResource("/co/edu/uptc/assets/logo.png");
+        if (iconUrl != null) {
+            stage.getIcons().add(new Image(iconUrl.toExternalForm()));
+        }
     }
 
     public static void main(String[] args) {

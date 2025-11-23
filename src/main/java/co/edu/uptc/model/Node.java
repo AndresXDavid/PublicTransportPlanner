@@ -96,9 +96,9 @@ public class Node {
     /**
      * Añade una arista desde este nodo hacia otro
      */
-    public void addEdge(String toId, double distance, double time) {
+    public void addEdge(String toId, double distance) {
         if (toId == null || toId.isBlank()) return;
-        Edge e = new Edge(this.id, toId, distance, time);
+        Edge e = new Edge(this.id, toId, distance);
         edgesMap.put(toId, e);
         // Mantener lista sincronizada para JAXB
         edges = new ArrayList<>(edgesMap.values());

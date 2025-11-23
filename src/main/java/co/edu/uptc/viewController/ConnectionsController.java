@@ -16,7 +16,7 @@ public class ConnectionsController {
      @FXML private TableView<Edge> connectionsTable;
      @FXML private TableColumn<Edge, String> colFrom, colTo, colDistance, colTime;
      @FXML private ComboBox<String> cmbFrom, cmbTo;
-     @FXML private TextField distanceField, timeField, searchField;
+     @FXML private TextField distanceField, searchField;
 
      private GraphController graphController;
      private ResourceBundle bundle;
@@ -29,7 +29,6 @@ public class ConnectionsController {
           colFrom.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getFromId()));
           colTo.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getToId()));
           colDistance.setCellValueFactory(cd -> new SimpleStringProperty(String.valueOf(cd.getValue().getDistance())));
-          colTime.setCellValueFactory(cd -> new SimpleStringProperty(String.valueOf(cd.getValue().getTime())));
 
           refreshData();
      }
@@ -76,7 +75,6 @@ public class ConnectionsController {
           String from = cmbFrom.getValue();
           String to = cmbTo.getValue();
           String distS = distanceField.getText().trim();
-          String timeS = timeField.getText().trim();
 
           if (from == null || to == null || distS.isEmpty()) {
                showAlert(Alert.AlertType.WARNING, bundle.getString("error.fill.fields"));
@@ -88,8 +86,7 @@ public class ConnectionsController {
           }
           try {
                double dist = Double.parseDouble(distS);
-               double time = timeS.isEmpty() ? dist / graphController.getDefaultSpeed() : Double.parseDouble(timeS);
-               graphController.addEdge(new Edge(from, to, dist, time));
+               graphController.addEdge(new Edge(from, to, dist));
                refreshData();
                showAlert(Alert.AlertType.INFORMATION, bundle.getString("info.connection.saved"));
                clearForm();
@@ -106,7 +103,6 @@ public class ConnectionsController {
                cmbFrom.setValue(sel.getFromId());
                cmbTo.setValue(sel.getToId());
                distanceField.setText(String.valueOf(sel.getDistance()));
-               timeField.setText(String.valueOf(sel.getTime()));
           } else {
                // si no había selección (se estaba creando uno nuevo), limpiar el formulario
                clearForm();
@@ -117,7 +113,6 @@ public class ConnectionsController {
           cmbFrom.setValue(null);
           cmbTo.setValue(null);
           distanceField.setText("");
-          timeField.setText("");
      }
 
      private void showAlert(Alert.AlertType t, String txt) {

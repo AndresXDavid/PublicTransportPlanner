@@ -24,6 +24,9 @@ public class SettingsController {
      private void onSaveSettings() {
           try {
                double s = Double.parseDouble(speedField.getText().trim());
+               if (s < 0) {
+                    throw new NumberFormatException();
+               }
                graphController.setDefaultSpeed(s);
                showInfo(bundle.getString("info.settings.saved"));
           } catch (NumberFormatException ex) {
