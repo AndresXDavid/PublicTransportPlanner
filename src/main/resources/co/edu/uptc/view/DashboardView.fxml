@@ -6,7 +6,8 @@
 <ScrollPane xmlns:fx="http://javafx.com/fxml/1"
             xmlns="http://javafx.com/javafx/21"
             fitToWidth="true"
-            style="-fx-background-color: transparent;">
+            style="-fx-background-color: transparent;"
+            fx:controller="co.edu.uptc.viewController.DashboardController">
     
     <VBox spacing="24" style="-fx-padding: 24;">
         
@@ -24,51 +25,52 @@
                 <ColumnConstraints percentWidth="25" minWidth="200"/>
                 <ColumnConstraints percentWidth="25" minWidth="200"/>
             </columnConstraints>
-            
+
             <!-- Card 1: Estaciones -->
             <VBox styleClass="stat-card,card-primary" spacing="12" GridPane.columnIndex="0" GridPane.rowIndex="0">
                 <HBox alignment="CENTER_LEFT" spacing="12">
-                    <Label text="📍" styleClass="stat-icon" style="-fx-text-fill: white;"/>
+                    <Label text="📍" styleClass="stat-icon"/>
                     <VBox spacing="4">
-                        <Label text="0" styleClass="stat-number" style="-fx-text-fill: white;" fx:id="lblStationCount"/>
-                        <Label text="%tab.stations" styleClass="stat-label" style="-fx-text-fill: rgba(255,255,255,0.8);"/>
+                        <Label text="0" styleClass="stat-number" fx:id="lblStationCount"/>
+                        <Label text="%tab.stations" styleClass="stat-label"/>
                     </VBox>
                 </HBox>
             </VBox>
-            
+
             <!-- Card 2: Conexiones -->
             <VBox styleClass="stat-card,card-secondary" spacing="12" GridPane.columnIndex="1" GridPane.rowIndex="0">
                 <HBox alignment="CENTER_LEFT" spacing="12">
-                    <Label text="🔗" styleClass="stat-icon" style="-fx-text-fill: white;"/>
+                    <Label text="🔗" styleClass="stat-icon"/>
                     <VBox spacing="4">
-                        <Label text="0" styleClass="stat-number" style="-fx-text-fill: white;" fx:id="lblConnectionCount"/>
-                        <Label text="%tab.connections" styleClass="stat-label" style="-fx-text-fill: rgba(255,255,255,0.8);"/>
+                        <Label text="0" styleClass="stat-number" fx:id="lblConnectionCount"/>
+                        <Label text="%tab.connections" styleClass="stat-label"/>
                     </VBox>
                 </HBox>
             </VBox>
-            
+
             <!-- Card 3: Distancia Total -->
             <VBox styleClass="stat-card,card-warning" spacing="12" GridPane.columnIndex="2" GridPane.rowIndex="0">
                 <HBox alignment="CENTER_LEFT" spacing="12">
-                    <Label text="📏" styleClass="stat-icon" style="-fx-text-fill: white;"/>
+                    <Label text="📏" styleClass="stat-icon"/>
                     <VBox spacing="4">
-                        <Label text="0 km" styleClass="stat-number" style="-fx-text-fill: white; -fx-font-size: 28px;" fx:id="lblTotalDistance"/>
-                        <Label text="%label.distance" styleClass="stat-label" style="-fx-text-fill: rgba(255,255,255,0.8);"/>
+                        <Label text="0 km" styleClass="stat-number" fx:id="lblTotalDistance"/>
+                        <Label text="%label.distance" styleClass="stat-label"/>
                     </VBox>
                 </HBox>
             </VBox>
-            
+
             <!-- Card 4: Rutas Disponibles -->
             <VBox styleClass="stat-card,card-info" spacing="12" GridPane.columnIndex="3" GridPane.rowIndex="0">
                 <HBox alignment="CENTER_LEFT" spacing="12">
-                    <Label text="🗺️" styleClass="stat-icon" style="-fx-text-fill: white;"/>
+                    <Label text="🗺️" styleClass="stat-icon"/>
                     <VBox spacing="4">
-                        <Label text="∞" styleClass="stat-number" style="-fx-text-fill: white;" fx:id="lblRouteCount"/>
-                        <Label text="%tab.routes" styleClass="stat-label" style="-fx-text-fill: rgba(255,255,255,0.8);"/>
+                        <Label text="∞" styleClass="stat-number" fx:id="lblRouteCount"/>
+                        <Label text="%tab.routes" styleClass="stat-label"/>
                     </VBox>
                 </HBox>
             </VBox>
         </GridPane>
+
         
         <!-- Quick Actions -->
         <VBox styleClass="card" spacing="16">
@@ -82,11 +84,16 @@
                 </columnConstraints>
                 
                 <Button text="%quickActions.addStation" styleClass="button,primary" 
-                        maxWidth="Infinity" prefHeight="50" GridPane.columnIndex="0"/>
+                        maxWidth="Infinity" prefHeight="50" GridPane.columnIndex="0"
+                        onAction="#addStation"/>
+
                 <Button text="%quickActions.addConnection" styleClass="button,secondary" 
-                        maxWidth="Infinity" prefHeight="50" GridPane.columnIndex="1"/>
+                        maxWidth="Infinity" prefHeight="50" GridPane.columnIndex="1"
+                        onAction="#addConnection"/>
+
                 <Button text="%button.calculate.route" styleClass="button,ghost" 
-                        maxWidth="Infinity" prefHeight="50" GridPane.columnIndex="2"/>
+                        maxWidth="Infinity" prefHeight="50" GridPane.columnIndex="2"
+                        onAction="#calculateRoute"/>
             </GridPane>
         </VBox>
         

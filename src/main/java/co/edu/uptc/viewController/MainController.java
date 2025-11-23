@@ -31,6 +31,14 @@ public class MainController {
     private GraphController graphController;
     private DashboardController dashboardController;
 
+    @FXML private Tab tabDashboard;
+    @FXML private Tab tabStations;
+    @FXML private Tab tabConnections;
+    @FXML private Tab tabRoutes;
+    @FXML private Tab tabMap;
+    @FXML private Tab tabSettings;
+
+
     public void postLoadInit(Stage stage) {
         this.stage = stage;
     }
@@ -41,8 +49,12 @@ public class MainController {
         graphController = GraphController.getInstance();
         autoLoadGraph();
 
-        // Cargar vistas
+        // 🔹 Cargar vistas y pasar referencia
         dashboardController = loadTabContentWithController("/co/edu/uptc/view/DashboardView.fxml", dashboardContainer);
+        if (dashboardController != null) {
+            dashboardController.setMainController(this);
+        }
+
         loadTabContent("/co/edu/uptc/view/StationsView.fxml", stationsContainer);
         loadTabContent("/co/edu/uptc/view/ConnectionsView.fxml", connectionsContainer);
         loadTabContent("/co/edu/uptc/view/RoutesView.fxml", routesContainer);
@@ -50,6 +62,29 @@ public class MainController {
         loadTabContent("/co/edu/uptc/view/SettingsView.fxml", settingsContainer);
 
         setupLanguageSelector();
+    }
+
+    public void selectTab(String tabId) {
+        switch (tabId) {
+            case "dashboard":
+                mainTabPane.getSelectionModel().select(tabDashboard);
+                break;
+            case "stations":
+                mainTabPane.getSelectionModel().select(tabStations);
+                break;
+            case "connections":
+                mainTabPane.getSelectionModel().select(tabConnections);
+                break;
+            case "routes":
+                mainTabPane.getSelectionModel().select(tabRoutes);
+                break;
+            case "map":
+                mainTabPane.getSelectionModel().select(tabMap);
+                break;
+            case "settings":
+                mainTabPane.getSelectionModel().select(tabSettings);
+                break;
+        }
     }
 
     private void loadBundle() {
