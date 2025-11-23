@@ -12,8 +12,8 @@
         
         <!-- Header -->
         <VBox spacing="8">
-            <Label text="Planificador de Transporte Público" styleClass="label,title"/>
-            <Label text="Sistema de gestión de rutas y estaciones" styleClass="label,caption"/>
+            <Label text="%dashboard.title" styleClass="label,title"/>
+            <Label text="%label.welcome" styleClass="label,caption"/>
         </VBox>
         
         <!-- Stats Cards -->
@@ -31,7 +31,7 @@
                     <Label text="📍" styleClass="stat-icon" style="-fx-text-fill: white;"/>
                     <VBox spacing="4">
                         <Label text="0" styleClass="stat-number" style="-fx-text-fill: white;" fx:id="lblStationCount"/>
-                        <Label text="Estaciones" styleClass="stat-label" style="-fx-text-fill: rgba(255,255,255,0.8);"/>
+                        <Label text="%tab.stations" styleClass="stat-label" style="-fx-text-fill: rgba(255,255,255,0.8);"/>
                     </VBox>
                 </HBox>
             </VBox>
@@ -42,7 +42,7 @@
                     <Label text="🔗" styleClass="stat-icon" style="-fx-text-fill: white;"/>
                     <VBox spacing="4">
                         <Label text="0" styleClass="stat-number" style="-fx-text-fill: white;" fx:id="lblConnectionCount"/>
-                        <Label text="Conexiones" styleClass="stat-label" style="-fx-text-fill: rgba(255,255,255,0.8);"/>
+                        <Label text="%tab.connections" styleClass="stat-label" style="-fx-text-fill: rgba(255,255,255,0.8);"/>
                     </VBox>
                 </HBox>
             </VBox>
@@ -53,7 +53,7 @@
                     <Label text="📏" styleClass="stat-icon" style="-fx-text-fill: white;"/>
                     <VBox spacing="4">
                         <Label text="0 km" styleClass="stat-number" style="-fx-text-fill: white; -fx-font-size: 28px;" fx:id="lblTotalDistance"/>
-                        <Label text="Distancia Total" styleClass="stat-label" style="-fx-text-fill: rgba(255,255,255,0.8);"/>
+                        <Label text="%label.distance" styleClass="stat-label" style="-fx-text-fill: rgba(255,255,255,0.8);"/>
                     </VBox>
                 </HBox>
             </VBox>
@@ -64,7 +64,7 @@
                     <Label text="🗺️" styleClass="stat-icon" style="-fx-text-fill: white;"/>
                     <VBox spacing="4">
                         <Label text="∞" styleClass="stat-number" style="-fx-text-fill: white;" fx:id="lblRouteCount"/>
-                        <Label text="Rutas Posibles" styleClass="stat-label" style="-fx-text-fill: rgba(255,255,255,0.8);"/>
+                        <Label text="%tab.routes" styleClass="stat-label" style="-fx-text-fill: rgba(255,255,255,0.8);"/>
                     </VBox>
                 </HBox>
             </VBox>
@@ -72,7 +72,7 @@
         
         <!-- Quick Actions -->
         <VBox styleClass="card" spacing="16">
-            <Label text="Acciones Rápidas" styleClass="label,section-title"/>
+            <Label text="%quickActions.title" styleClass="label,section-title"/>
             
             <GridPane hgap="12" vgap="12">
                 <columnConstraints>
@@ -81,11 +81,11 @@
                     <ColumnConstraints percentWidth="33"/>
                 </columnConstraints>
                 
-                <Button text="Nueva Estación" styleClass="button,primary" 
+                <Button text="%quickActions.addStation" styleClass="button,primary" 
                         maxWidth="Infinity" prefHeight="50" GridPane.columnIndex="0"/>
-                <Button text="Nueva Conexión" styleClass="button,secondary" 
+                <Button text="%quickActions.addConnection" styleClass="button,secondary" 
                         maxWidth="Infinity" prefHeight="50" GridPane.columnIndex="1"/>
-                <Button text="Calcular Ruta" styleClass="button,ghost" 
+                <Button text="%button.calculate.route" styleClass="button,ghost" 
                         maxWidth="Infinity" prefHeight="50" GridPane.columnIndex="2"/>
             </GridPane>
         </VBox>
@@ -99,31 +99,31 @@
             
             <!-- Recent Activity -->
             <VBox styleClass="card" spacing="12" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                <Label text="Actividad Reciente" styleClass="label,section-title"/>
+                <Label text="%info.recentActivity" styleClass="label,section-title"/>
                 <Separator/>
                 <VBox spacing="8">
-                    <Label text="• Sistema inicializado correctamente" style="-fx-text-fill: -gray-600;"/>
-                    <Label text="• Listo para cargar datos" style="-fx-text-fill: -gray-600;"/>
-                    <Label text="• Utiliza el botón 'Cargar XML' para importar datos" style="-fx-text-fill: -gray-600;"/>
+                    <Label text="%info.activity1" style="-fx-text-fill: -gray-600;"/>
+                    <Label text="%info.activity2" style="-fx-text-fill: -gray-600;"/>
+                    <Label text="%info.activity3" style="-fx-text-fill: -gray-600;"/>
                 </VBox>
             </VBox>
             
             <!-- System Info -->
             <VBox styleClass="card" spacing="12" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                <Label text="Información del Sistema" styleClass="label,section-title"/>
+                <Label text="%info.systemInfo" styleClass="label,section-title"/>
                 <Separator/>
                 <VBox spacing="8">
                     <HBox spacing="8" alignment="CENTER_LEFT">
-                        <Label text="Estado:" style="-fx-font-weight: 600;"/>
+                        <Label text="%info.status" style="-fx-font-weight: 600;"/>
                         <Label text="●" style="-fx-text-fill: #10b981; -fx-font-size: 16px;"/>
-                        <Label text="Operativo" style="-fx-text-fill: #10b981; -fx-font-weight: 600;"/>
+                        <Label text="%info.operational" style="-fx-text-fill: #10b981; -fx-font-weight: 600;"/>
                     </HBox>
                     <HBox spacing="8">
-                        <Label text="Versión:" style="-fx-font-weight: 600;"/>
+                        <Label text="%info.version" style="-fx-font-weight: 600;"/>
                         <Label text="1.0.0"/>
                     </HBox>
                     <HBox spacing="8">
-                        <Label text="Motor de Rutas:" style="-fx-font-weight: 600;"/>
+                        <Label text="%info.routeEngine" style="-fx-font-weight: 600;"/>
                         <Label text="Dijkstra + BFS"/>
                     </HBox>
                 </VBox>
@@ -132,7 +132,7 @@
         
         <!-- Features -->
         <VBox styleClass="card" spacing="16">
-            <Label text="Características del Sistema" styleClass="label,section-title"/>
+            <Label text="%features.title" styleClass="label,section-title"/>
             <Separator/>
             
             <GridPane hgap="20" vgap="16">
@@ -142,27 +142,23 @@
                 </columnConstraints>
                 
                 <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                    <Label text="Algoritmos Avanzados" style="-fx-font-weight: 700; -fx-font-size: 14px;"/>
-                    <Label text="Utiliza algoritmos de grafos como Dijkstra y BFS para encontrar las rutas más óptimas." 
-                            wrapText="true" style="-fx-text-fill: -gray-600;"/>
+                    <Label text="%features.advancedAlgorithmsTitle" style="-fx-font-weight: 700; -fx-font-size: 14px;"/>
+                    <Label text="%features.advancedAlgorithmsDesc" wrapText="true" style="-fx-text-fill: -gray-600;"/>
                 </VBox>
                 
                 <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                    <Label text="Visualización de Mapas" style="-fx-font-weight: 700; -fx-font-size: 14px;"/>
-                    <Label text="Integración con Leaflet para visualizar estaciones y rutas en tiempo real sobre mapas interactivos." 
-                            wrapText="true" style="-fx-text-fill: -gray-600;"/>
+                    <Label text="%features.mapVisualizationTitle" style="-fx-font-weight: 700; -fx-font-size: 14px;"/>
+                    <Label text="%features.mapVisualizationDesc" wrapText="true" style="-fx-text-fill: -gray-600;"/>
                 </VBox>
                 
                 <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                    <Label text="Persistencia de Datos" style="-fx-font-weight: 700; -fx-font-size: 14px;"/>
-                    <Label text="Guarda y carga configuraciones de red en formato XML para reutilizar tus diseños." 
-                            wrapText="true" style="-fx-text-fill: -gray-600;"/>
+                    <Label text="%features.dataPersistenceTitle" style="-fx-font-weight: 700; -fx-font-size: 14px;"/>
+                    <Label text="%features.dataPersistenceDesc" wrapText="true" style="-fx-text-fill: -gray-600;"/>
                 </VBox>
                 
                 <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                    <Label text="Multi-idioma" style="-fx-font-weight: 700; -fx-font-size: 14px;"/>
-                    <Label text="Soporte completo para español, inglés y francés con cambio dinámico de idioma." 
-                            wrapText="true" style="-fx-text-fill: -gray-600;"/>
+                    <Label text="%features.multiLanguageTitle" style="-fx-font-weight: 700; -fx-font-size: 14px;"/>
+                    <Label text="%features.multiLanguageDesc" wrapText="true" style="-fx-text-fill: -gray-600;"/>
                 </VBox>
             </GridPane>
         </VBox>

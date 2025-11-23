@@ -9,11 +9,11 @@
 
      <top>
           <ToolBar styleClass="tool-bar">
-               <Button fx:id="btnLoadXml" text="📁 %button.load.xml" onAction="#onLoadGraph" styleClass="button,ghost"/>
-               <Button fx:id="btnSaveXml" text="💾 %button.save.xml" onAction="#onSaveGraph" styleClass="button,ghost"/>
+               <Button fx:id="btnLoadXml" text="%button.load.xml" onAction="#onLoadGraph" styleClass="button,ghost"/>
+               <Button fx:id="btnSaveXml" text="%button.save.xml" onAction="#onSaveGraph" styleClass="button,ghost"/>
                <Separator orientation="VERTICAL"/>
                <Region HBox.hgrow="ALWAYS"/>
-               <Label text="🌍 %label.language" style="-fx-font-weight: 600;"/>
+               <Label text="%label.language" style="-fx-font-weight: 600;"/>
                <ComboBox fx:id="cmbLocale" prefWidth="140" styleClass="combo-box"/>
           </ToolBar>
      </top>
@@ -22,32 +22,32 @@
           <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE">
                <tabs>
                     <!-- Dashboard Tab -->
-                    <Tab text="🏠 %tab.dashboard" closable="false" fx:id="tabDashboard">
+                    <Tab text="%tab.dashboard" closable="false" fx:id="tabDashboard">
                          <AnchorPane fx:id="dashboardContainer"/>
                     </Tab>
 
                     <!-- Stations Tab -->
-                    <Tab text="📍 %tab.stations" fx:id="tabStations" closable="false">
+                    <Tab text="%tab.stations" fx:id="tabStations" closable="false">
                          <AnchorPane fx:id="stationsContainer"/>
                     </Tab>
 
                     <!-- Connections Tab -->
-                    <Tab text="🔗 %tab.connections" fx:id="tabConnections" closable="false">
+                    <Tab text="%tab.connections" fx:id="tabConnections" closable="false">
                          <AnchorPane fx:id="connectionsContainer"/>
                     </Tab>
 
                     <!-- Routes Tab -->
-                    <Tab text="🧭 %tab.routes" fx:id="tabRoutes" closable="false">
+                    <Tab text="%tab.routes" fx:id="tabRoutes" closable="false">
                          <AnchorPane fx:id="routesContainer"/>
                     </Tab>
 
                     <!-- Map Tab -->
-                    <Tab text="🗺️ %tab.map" fx:id="tabMap" closable="false">
+                    <Tab text="%tab.map" fx:id="tabMap" closable="false">
                          <AnchorPane fx:id="mapContainer"/>
                     </Tab>
 
                     <!-- Settings Tab -->
-                    <Tab text="⚙️ %tab.settings" fx:id="tabSettings" closable="false">
+                    <Tab text="%tab.settings" fx:id="tabSettings" closable="false">
                          <AnchorPane fx:id="settingsContainer"/>
                     </Tab>
                </tabs>

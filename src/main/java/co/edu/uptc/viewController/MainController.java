@@ -39,6 +39,7 @@ public class MainController {
     public void initialize() {
         loadBundle();
         graphController = GraphController.getInstance();
+        autoLoadGraph();
 
         // Cargar vistas
         dashboardController = loadTabContentWithController("/co/edu/uptc/view/DashboardView.fxml", dashboardContainer);
@@ -143,9 +144,7 @@ public class MainController {
             
             // Actualizar textos de los tabs
             updateTabTitles();
-            
-            showInfo("✅ " + bundle.getString("info.locale.changed"));
-            
+
         } catch (Exception e) {
             showError("❌ Error al recargar la aplicación: " + e.getMessage());
             e.printStackTrace();
@@ -276,6 +275,24 @@ public class MainController {
             } else {
                 showInfo(bundle.getString("graph.load.cancelled"));
             }
+            reloadApplication();
+        } catch (Exception e) {
+            showError(bundle.getString("graph.load.error") + ": " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void autoLoadGraph() {
+        try {    
+            File file = new File("src/main/resources/co/edu/uptc/network_example.xml");
+            graphController.loadGraph(file.getAbsolutePath());
+            
+            // Actualizar dashboard
+            if (dashboardController != null) {
+                dashboardController.refresh();
+            }
+            reloadApplication();
         } catch (Exception e) {
             showError(bundle.getString("graph.load.error") + ": " + e.getMessage());
             e.printStackTrace();
