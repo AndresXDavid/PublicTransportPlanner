@@ -17,7 +17,7 @@ public class GraphController {
 
     private final Map<String, Node> nodes = new HashMap<>();
     private final RouteDAO routeDAO;
-    private double defaultSpeed = 40.0; // km/h u otra unidad que uses
+    private double defaultSpeed = 40.0; // km/h
 
     private GraphController() {
         this.routeDAO = PersistenceManager.getInstance().getRouteDAO();
@@ -78,7 +78,7 @@ public class GraphController {
         Node to = nodes.get(e.getToId());
         if (from == null || to == null) return false;
 
-        // si time es 0, lo dejamos como 0 (puede calcularse cuando se muestre)
+        // Añadir arista bidireccional
         from.addEdge(to.getId(), e.getDistance(), e.getTime());
         to.addEdge(from.getId(), e.getDistance(), e.getTime());
         return true;
@@ -101,7 +101,7 @@ public class GraphController {
         List<Edge> edges = new ArrayList<>();
         Set<String> seen = new HashSet<>();
         for (Node n : nodes.values()) {
-            for (co.edu.uptc.model.Edge e : n.getEdges()) {
+            for (Edge e : n.getEdges()) {
                 String key = e.getFromId() + "->" + e.getToId();
                 String rev = e.getToId() + "->" + e.getFromId();
                 if (seen.contains(key) || seen.contains(rev)) continue;
@@ -114,18 +114,50 @@ public class GraphController {
 
     // ---- Persistencia ----
     public void saveGraph(String path) {
-    GraphData gd = new GraphData(new ArrayList<>(nodes.values()));
-    routeDAO.save(gd, path);
+        GraphData gd = new GraphData(new ArrayList<>(nodes.values()));
+        routeDAO.save(gd, path);
     }
 
     public void loadGraph(String path) {
-        // GraphData data = (GraphData) routeDAO.load(path);
-        // if (data == null) return;
-        // nodes.clear(); for (Node n: data.getNodes()) nodes.put(n.getId(), n);
-        Object o = routeDAO.load(path); // adaptar a tu DAO real
+        try {
+            GraphData data = routeDAO.load(path);
+            if (data == null || data.getNodes() == null) {
+                System.err.println("No se pudo cargar el grafo: datos nulos");
+                return;
+            }
+            
+            // Limpiar grafo actual
+            nodes.clear();
+            
+            // Cargar nodos
+            for (Node n : data.getNodes()) {
+                if (n != null && n.getId() != null) {
+                    nodes.put(n.getId(), n);
+                }
+            }
+            
+            System.out.println("✅ Grafo cargado: " + nodes.size() + " nodos");
+            
+            // Contar aristas
+            int totalEdges = 0;
+            for (Node n : nodes.values()) {
+                totalEdges += n.getEdges().size();
+            }
+            System.out.println("✅ Total de aristas: " + totalEdges);
+            
+        } catch (Exception e) {
+            System.err.println("❌ Error al cargar grafo: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     // ---- Config ----
     public double getDefaultSpeed() { return defaultSpeed; }
     public void setDefaultSpeed(double defaultSpeed) { this.defaultSpeed = defaultSpeed; }
+    
+    // ---- Clear ----
+    public void clearGraph() {
+        nodes.clear();
+    }
 }

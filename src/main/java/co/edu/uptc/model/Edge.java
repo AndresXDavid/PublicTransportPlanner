@@ -1,13 +1,24 @@
 package co.edu.uptc.model;
 
+import jakarta.xml.bind.annotation.*;
+
 /**
  * Arista con id origen / destino, distancia y tiempo.
  * Controladores esperan getters: getFromId(), getToId(), getDistance(), getTime()
  */
+@XmlRootElement(name = "edge")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Edge {
+    @XmlElement
     private String fromId;
+
+    @XmlElement
     private String toId;
+
+    @XmlElement
     private double distance;
+
+    @XmlElement
     private double time; // opcional, si 0 se puede calcular desde distancia/speed
 
     public Edge() { }

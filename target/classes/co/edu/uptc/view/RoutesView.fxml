@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.control.TextArea?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-          fx:controller="co.edu.uptc.viewController.RoutesController"
-          spacing="8" padding="10">
+<VBox xmlns:fx="http://javafx.com/fxml/1"
+      xmlns="http://javafx.com/javafx/21"
+      fx:controller="co.edu.uptc.viewController.RoutesController"
+      spacing="8" style="-fx-padding: 10;">
 
      <HBox spacing="8" alignment="CENTER_LEFT">
           <Label text="%label.route.from"/>
@@ -14,21 +14,23 @@
           <ComboBox fx:id="cmbTo" prefWidth="180"/>
           <Label text="%label.route.criteria"/>
           <ComboBox fx:id="cmbCriteria" prefWidth="160"/>
-          <Button text="%button.calculate" onAction="#onCalculate" styleClass="button primary"/>
+          <Button text="%button.calculate" onAction="#onCalculate" styleClass="button,primary"/>
      </HBox>
 
-     <SplitPane orientation="HORIZONTAL" prefHeight="520">
+     <SplitPane orientation="HORIZONTAL" prefHeight="520" VBox.vgrow="ALWAYS">
           <AnchorPane>
-               <ListView fx:id="resultList" />
+               <ListView fx:id="resultList" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" 
+                         AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
           </AnchorPane>
 
           <AnchorPane>
-               <VBox spacing="8" AnchorPane.topAnchor="8">
-                    <Label text="%label.route.details" styleClass="label title"/>
-                    <TextArea fx:id="routeDetails" editable="false" wrapText="true"/>
+               <VBox spacing="8" AnchorPane.topAnchor="8.0" AnchorPane.leftAnchor="8.0" 
+                    AnchorPane.rightAnchor="8.0" AnchorPane.bottomAnchor="8.0">
+                    <Label text="%label.route.details" styleClass="label,title"/>
+                    <TextArea fx:id="routeDetails" editable="false" wrapText="true" VBox.vgrow="ALWAYS"/>
                     <HBox spacing="8">
-                         <Button text="%button.showOnMap" onAction="#onShowOnMap" styleClass="button ghost"/>
-                         <Button text="%button.export" onAction="#onExport" styleClass="button ghost"/>
+                         <Button text="%button.showOnMap" onAction="#onShowOnMap" styleClass="button,ghost"/>
+                         <Button text="%button.export" onAction="#onExport" styleClass="button,ghost"/>
                     </HBox>
                </VBox>
           </AnchorPane>

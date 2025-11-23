@@ -5,6 +5,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import co.edu.uptc.model.GraphData;
+import co.edu.uptc.model.Node;
+import co.edu.uptc.model.Edge;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
@@ -19,7 +21,8 @@ public class XmlRouteDAO implements RouteDAO {
             if (tree == null) {
                 throw new PersistenceException("RouteTree nulo al intentar guardar.");
             }
-            JAXBContext context = JAXBContext.newInstance(GraphData.class);
+            // IMPORTANTE: Agregar Node.class y Edge.class al contexto
+            JAXBContext context = JAXBContext.newInstance(GraphData.class, Node.class, Edge.class);
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
@@ -47,7 +50,8 @@ public class XmlRouteDAO implements RouteDAO {
                 return null;
             }
 
-            JAXBContext context = JAXBContext.newInstance(GraphData.class);
+            // IMPORTANTE: Agregar Node.class y Edge.class al contexto
+            JAXBContext context = JAXBContext.newInstance(GraphData.class, Node.class, Edge.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             return (GraphData) unmarshaller.unmarshal(f);
         } catch (PersistenceException p) {

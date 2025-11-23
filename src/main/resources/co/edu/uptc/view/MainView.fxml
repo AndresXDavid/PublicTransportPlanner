@@ -1,50 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="co.edu.uptc.viewController.MainController"
-            stylesheets="/co/edu/uptc/styles/styles.css">
 
-    <top>
-        <ToolBar styleClass="tool-bar">
-            <Button fx:id="btnLoadXml" text="%button.load.xml" onAction="#onLoadGraph"/>
-            <Button fx:id="btnSaveXml" text="%button.save.xml" onAction="#onSaveGraph"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Label text="%label.language"/>
-            <ComboBox fx:id="cmbLocale" prefWidth="140" />
-        </ToolBar>
-    </top>
+     <BorderPane xmlns:fx="http://javafx.com/fxml/1"
+               xmlns="http://javafx.com/javafx/21"
+               fx:controller="co.edu.uptc.viewController.MainController"
+               stylesheets="@../styles/styles.css">
 
-    <center>
-        <TabPane fx:id="mainTabPane">
-            <tabs>
-                <Tab text="%tab.dashboard" closable="false" fx:id="tabDashboard">
-                    <AnchorPane>
-                        <Label text="%dashboard.title" layoutX="20" layoutY="14" styleClass="label title"/>
-                        <!-- Contenido del dashboard (ocupado por la app) -->
-                    </AnchorPane>
-                </Tab>
+     <top>
+          <ToolBar styleClass="tool-bar">
+               <Button fx:id="btnLoadXml" text="📁 %button.load.xml" onAction="#onLoadGraph" styleClass="button,ghost"/>
+               <Button fx:id="btnSaveXml" text="💾 %button.save.xml" onAction="#onSaveGraph" styleClass="button,ghost"/>
+               <Separator orientation="VERTICAL"/>
+               <Region HBox.hgrow="ALWAYS"/>
+               <Label text="🌍 %label.language" style="-fx-font-weight: 600;"/>
+               <ComboBox fx:id="cmbLocale" prefWidth="140" styleClass="combo-box"/>
+          </ToolBar>
+     </top>
 
-                <Tab text="%tab.stations" fx:id="tabStations" closable="false">
-                    <AnchorPane fx:id="stationsContainer"/>
-                </Tab>
+     <center>
+          <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                    <!-- Dashboard Tab -->
+                    <Tab text="🏠 %tab.dashboard" closable="false" fx:id="tabDashboard">
+                         <AnchorPane fx:id="dashboardContainer"/>
+                    </Tab>
 
-                <Tab text="%tab.connections" fx:id="tabConnections" closable="false">
-                    <AnchorPane fx:id="connectionsContainer"/>
-                </Tab>
+                    <!-- Stations Tab -->
+                    <Tab text="📍 %tab.stations" fx:id="tabStations" closable="false">
+                         <AnchorPane fx:id="stationsContainer"/>
+                    </Tab>
 
-                <Tab text="%tab.routes" fx:id="tabRoutes" closable="false">
-                    <AnchorPane fx:id="routesContainer"/>
-                </Tab>
+                    <!-- Connections Tab -->
+                    <Tab text="🔗 %tab.connections" fx:id="tabConnections" closable="false">
+                         <AnchorPane fx:id="connectionsContainer"/>
+                    </Tab>
 
-                <Tab text="%tab.map" fx:id="tabMap" closable="false">
-                    <AnchorPane fx:id="mapContainer"/>
-                </Tab>
+                    <!-- Routes Tab -->
+                    <Tab text="🧭 %tab.routes" fx:id="tabRoutes" closable="false">
+                         <AnchorPane fx:id="routesContainer"/>
+                    </Tab>
 
-                <Tab text="%tab.settings" fx:id="tabSettings" closable="false">
-                    <AnchorPane fx:id="settingsContainer"/>
-                </Tab>
-            </tabs>
-        </TabPane>
-    </center>
+                    <!-- Map Tab -->
+                    <Tab text="🗺️ %tab.map" fx:id="tabMap" closable="false">
+                         <AnchorPane fx:id="mapContainer"/>
+                    </Tab>
+
+                    <!-- Settings Tab -->
+                    <Tab text="⚙️ %tab.settings" fx:id="tabSettings" closable="false">
+                         <AnchorPane fx:id="settingsContainer"/>
+                    </Tab>
+               </tabs>
+          </TabPane>
+     </center>
+
+     <bottom>
+          <HBox spacing="12" alignment="CENTER_LEFT" 
+               style="-fx-background-color: white; -fx-padding: 8 16; -fx-border-color: -gray-200; -fx-border-width: 1 0 0 0;">
+               <Label text="Sistema operativo" style="-fx-text-fill: #10b981; -fx-font-weight: 600; -fx-font-size: 12px;"/>
+               <Separator orientation="VERTICAL"/>
+               <Label text="TransMilenio - Bogotá" style="-fx-font-size: 12px;"/>
+               <Region HBox.hgrow="ALWAYS"/>
+               <Label text="v1.0.0" style="-fx-font-size: 12px; -fx-text-fill: -gray-500;"/>
+          </HBox>
+     </bottom>
 </BorderPane>

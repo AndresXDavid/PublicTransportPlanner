@@ -4,95 +4,107 @@
         <node>
             <id>1</id>
             <name>Estación Central</name>
+            <latitude>4.65</latitude>
+            <longitude>-74.05</longitude>
             <edges>
                 <edge>
-                    <sourceId>1</sourceId>
-                    <destinationId>2</destinationId>
+                    <fromId>1</fromId>
+                    <toId>2</toId>
                     <distance>5.0</distance>
+                    <time>7.5</time>
                 </edge>
                 <edge>
-                    <sourceId>1</sourceId>
-                    <destinationId>3</destinationId>
+                    <fromId>1</fromId>
+                    <toId>3</toId>
                     <distance>7.5</distance>
+                    <time>11.25</time>
                 </edge>
                 <edge>
-                    <sourceId>1</sourceId>
-                    <destinationId>3</destinationId>
-                    <distance>1.0</distance>
-                </edge>
-                <edge>
-                    <sourceId>1</sourceId>
-                    <destinationId>6</destinationId>
+                    <fromId>1</fromId>
+                    <toId>6</toId>
                     <distance>4.0</distance>
+                    <time>6.0</time>
                 </edge>
             </edges>
         </node>
         <node>
             <id>2</id>
             <name>Estación Norte</name>
+            <latitude>4.68</latitude>
+            <longitude>-74.06</longitude>
             <edges>
                 <edge>
-                    <sourceId>2</sourceId>
-                    <destinationId>1</destinationId>
+                    <fromId>2</fromId>
+                    <toId>1</toId>
                     <distance>5.0</distance>
+                    <time>7.5</time>
                 </edge>
                 <edge>
-                    <sourceId>2</sourceId>
-                    <destinationId>4</destinationId>
+                    <fromId>2</fromId>
+                    <toId>4</toId>
                     <distance>3.2</distance>
+                    <time>4.8</time>
                 </edge>
             </edges>
         </node>
         <node>
             <id>3</id>
             <name>Estación Sur</name>
+            <latitude>4.62</latitude>
+            <longitude>-74.04</longitude>
             <edges>
                 <edge>
-                    <sourceId>3</sourceId>
-                    <destinationId>1</destinationId>
+                    <fromId>3</fromId>
+                    <toId>1</toId>
                     <distance>7.5</distance>
+                    <time>11.25</time>
                 </edge>
                 <edge>
-                    <sourceId>3</sourceId>
-                    <destinationId>1</destinationId>
-                    <distance>1.0</distance>
-                </edge>
-                <edge>
-                    <sourceId>3</sourceId>
-                    <destinationId>6</destinationId>
+                    <fromId>3</fromId>
+                    <toId>6</toId>
                     <distance>2.0</distance>
+                    <time>3.0</time>
                 </edge>
             </edges>
         </node>
         <node>
             <id>4</id>
             <name>Estación Este</name>
+            <latitude>4.69</latitude>
+            <longitude>-74.02</longitude>
             <edges>
                 <edge>
-                    <sourceId>4</sourceId>
-                    <destinationId>2</destinationId>
+                    <fromId>4</fromId>
+                    <toId>2</toId>
                     <distance>3.2</distance>
+                    <time>4.8</time>
                 </edge>
             </edges>
         </node>
         <node>
             <id>5</id>
             <name>Estacion Noreste</name>
+            <latitude>4.70</latitude>
+            <longitude>-74.01</longitude>
             <edges/>
         </node>
         <node>
             <id>6</id>
             <name>Noroeste</name>
+            <latitude>4.67</latitude>
+            <longitude>-74.08</longitude>
             <edges>
                 <edge>
-                    <sourceId>6</sourceId>
-                    <destinationId>3</destinationId>
+                    <fromId>6</fromId>
+                    <toId>3</toId>
                     <distance>2.0</distance>
+                    <time>3.0</time>
                 </edge>
                 <edge>
-                    <sourceId>6</sourceId>
-                    <destinationId>1</destinationId>
+                    <fromId>6</fromId>
+                    <toId>1</toId>
                     <distance>4.0</distance>
+                    <time>6.0</time>
                 </edge>
             </edges>
         </node>

@@ -1,21 +1,27 @@
 package co.edu.uptc.model;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import jakarta.xml.bind.annotation.*;
+import java.util.*;
 
-/**
- * Nodo (estación) con aristas salientes guardadas en un map (destinationId -> Edge).
- */
+@XmlRootElement(name = "node")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Node {
+    
+    @XmlElement
     private String id;
+    
+    @XmlElement
     private String name;
-    private Double latitude;   // nullable
-    private Double longitude;  // nullable
+    
+    @XmlElement
+    private Double latitude;
+    
+    @XmlElement
+    private Double longitude;
 
-    // edges keyed by destination node id
-    private Map<String, Edge> edges = new HashMap<>();
+    // Map para acceso rápido por ID de destino
+    @XmlTransient
+    private Map<String, Edge> edgesMap = new HashMap<>();
 
     public Node() { }
 
@@ -30,7 +36,33 @@ public class Node {
         this.longitude = longitude;
     }
 
-    // getters / setters
+    // ========== JAXB Serialization Methods ==========
+    
+    /**
+     * Método para JAXB: retorna lista MUTABLE para deserialización
+     */
+    @XmlElementWrapper(name = "edges")
+    @XmlElement(name = "edge")
+    public List<Edge> getEdgesList() {
+        return new ArrayList<>(edgesMap.values());
+    }
+
+    /**
+     * Método para JAXB: recibe lista y la convierte al Map interno
+     */
+    public void setEdgesList(List<Edge> edgesList) {
+        this.edgesMap.clear();
+        if (edgesList != null) {
+            for (Edge e : edgesList) {
+                if (e != null && e.getToId() != null) {
+                    this.edgesMap.put(e.getToId(), e);
+                }
+            }
+        }
+    }
+
+    // ========== Getters / Setters ==========
+    
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
@@ -43,33 +75,54 @@ public class Node {
     public Double getLongitude() { return longitude; }
     public void setLongitude(Double longitude) { this.longitude = longitude; }
 
-    // edges API
+    // ========== Edge Management API ==========
+    
+    /**
+     * Añade una arista desde este nodo hacia otro
+     */
     public void addEdge(String toId, double distance, double time) {
         Edge e = new Edge(this.id, toId, distance, time);
-        edges.put(toId, e);
+        edgesMap.put(toId, e);
     }
 
+    /**
+     * Añade una arista existente
+     */
     public void addEdge(Edge e) {
-        if (e == null) return;
-        edges.put(e.getToId(), e);
+        if (e == null || e.getToId() == null) return;
+        edgesMap.put(e.getToId(), e);
     }
 
+    /**
+     * Elimina la arista hacia el nodo destino
+     */
     public boolean removeEdgeTo(String destinationId) {
-        return edges.remove(destinationId) != null;
+        return edgesMap.remove(destinationId) != null;
     }
 
+    /**
+     * Actualiza la distancia de una arista existente
+     */
     public boolean updateEdgeDistance(String destinationId, double newDistance) {
-        Edge e = edges.get(destinationId);
+        Edge e = edgesMap.get(destinationId);
         if (e == null) return false;
         e.setDistance(newDistance);
         return true;
     }
 
+    /**
+     * Retorna todas las aristas salientes como Collection
+     */
     public Collection<Edge> getEdges() {
-        return edges.values();
+        return edgesMap.values();
     }
 
-    public Edge getEdgeTo(String destinationId) { return edges.get(destinationId); }
+    /**
+     * Obtiene la arista hacia un destino específico
+     */
+    public Edge getEdgeTo(String destinationId) { 
+        return edgesMap.get(destinationId); 
+    }
 
     @Override
     public String toString() {

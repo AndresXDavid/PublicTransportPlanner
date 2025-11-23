@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Button?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-               fx:controller="co.edu.uptc.viewController.ConnectionsController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/21"
+            fx:controller="co.edu.uptc.viewController.ConnectionsController">
 
      <top>
-          <HBox spacing="8" padding="8">
-               <Button text="%button.new" onAction="#onNewConnection" styleClass="button primary"/>
-               <Button text="%button.delete" onAction="#onDeleteConnection" styleClass="button ghost"/>
+          <HBox spacing="8" style="-fx-padding: 8;">
+               <Button text="%button.new" onAction="#onNewConnection" styleClass="button,primary"/>
+               <Button text="%button.delete" onAction="#onDeleteConnection" styleClass="button,ghost"/>
                <Region HBox.hgrow="ALWAYS"/>
                <TextField fx:id="searchField" promptText="%prompt.search.connection"/>
                <Button text="%button.search" onAction="#onSearch"/>
@@ -30,15 +28,20 @@
      </center>
 
      <bottom>
-          <AnchorPane prefHeight="160">
-               <VBox spacing="8" AnchorPane.leftAnchor="8" AnchorPane.topAnchor="8">
-                    <Label text="%label.connection.details" styleClass="label title"/>
+          <AnchorPane prefHeight="160" style="-fx-background-color: white;">
+               <VBox spacing="8" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0" AnchorPane.rightAnchor="8.0">
+                    <Label text="%label.connection.details" styleClass="label,title"/>
                     <GridPane hgap="8" vgap="8">
+                         <columnConstraints>
+                              <ColumnConstraints minWidth="80"/>
+                              <ColumnConstraints minWidth="200" prefWidth="250"/>
+                         </columnConstraints>
+                         
                          <Label text="%col.from" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                         <ComboBox fx:id="cmbFrom" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                         <ComboBox fx:id="cmbFrom" prefWidth="250" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
                          <Label text="%col.to" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                         <ComboBox fx:id="cmbTo" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                         <ComboBox fx:id="cmbTo" prefWidth="250" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
                          <Label text="%col.distance" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
                          <TextField fx:id="distanceField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
@@ -48,7 +51,7 @@
                     </GridPane>
 
                     <HBox spacing="8">
-                         <Button text="%button.save" onAction="#onSaveConnection" styleClass="button primary"/>
+                         <Button text="%button.save" onAction="#onSaveConnection" styleClass="button,primary"/>
                          <Button text="%button.cancel" onAction="#onCancelEdit"/>
                     </HBox>
                </VBox>

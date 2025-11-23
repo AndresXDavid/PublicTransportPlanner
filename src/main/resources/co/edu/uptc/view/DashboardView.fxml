@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/21"
+            fitToWidth="true"
+            style="-fx-background-color: transparent;">
+    
+    <VBox spacing="24" style="-fx-padding: 24;">
+        
+        <!-- Header -->
+        <VBox spacing="8">
+            <Label text="Planificador de Transporte Público" styleClass="label,title"/>
+            <Label text="Sistema de gestión de rutas y estaciones" styleClass="label,caption"/>
+        </VBox>
+        
+        <!-- Stats Cards -->
+        <GridPane hgap="16" vgap="16">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="25" minWidth="200"/>
+                <ColumnConstraints percentWidth="25" minWidth="200"/>
+                <ColumnConstraints percentWidth="25" minWidth="200"/>
+                <ColumnConstraints percentWidth="25" minWidth="200"/>
+            </columnConstraints>
+            
+            <!-- Card 1: Estaciones -->
+            <VBox styleClass="stat-card,card-primary" spacing="12" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label text="📍" styleClass="stat-icon" style="-fx-text-fill: white;"/>
+                    <VBox spacing="4">
+                        <Label text="0" styleClass="stat-number" style="-fx-text-fill: white;" fx:id="lblStationCount"/>
+                        <Label text="Estaciones" styleClass="stat-label" style="-fx-text-fill: rgba(255,255,255,0.8);"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+            
+            <!-- Card 2: Conexiones -->
+            <VBox styleClass="stat-card,card-secondary" spacing="12" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label text="🔗" styleClass="stat-icon" style="-fx-text-fill: white;"/>
+                    <VBox spacing="4">
+                        <Label text="0" styleClass="stat-number" style="-fx-text-fill: white;" fx:id="lblConnectionCount"/>
+                        <Label text="Conexiones" styleClass="stat-label" style="-fx-text-fill: rgba(255,255,255,0.8);"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+            
+            <!-- Card 3: Distancia Total -->
+            <VBox styleClass="stat-card,card-warning" spacing="12" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label text="📏" styleClass="stat-icon" style="-fx-text-fill: white;"/>
+                    <VBox spacing="4">
+                        <Label text="0 km" styleClass="stat-number" style="-fx-text-fill: white; -fx-font-size: 28px;" fx:id="lblTotalDistance"/>
+                        <Label text="Distancia Total" styleClass="stat-label" style="-fx-text-fill: rgba(255,255,255,0.8);"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+            
+            <!-- Card 4: Rutas Disponibles -->
+            <VBox styleClass="stat-card,card-info" spacing="12" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label text="🗺️" styleClass="stat-icon" style="-fx-text-fill: white;"/>
+                    <VBox spacing="4">
+                        <Label text="∞" styleClass="stat-number" style="-fx-text-fill: white;" fx:id="lblRouteCount"/>
+                        <Label text="Rutas Posibles" styleClass="stat-label" style="-fx-text-fill: rgba(255,255,255,0.8);"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </GridPane>
+        
+        <!-- Quick Actions -->
+        <VBox styleClass="card" spacing="16">
+            <Label text="Acciones Rápidas" styleClass="label,section-title"/>
+            
+            <GridPane hgap="12" vgap="12">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="33"/>
+                    <ColumnConstraints percentWidth="33"/>
+                    <ColumnConstraints percentWidth="33"/>
+                </columnConstraints>
+                
+                <Button text="Nueva Estación" styleClass="button,primary" 
+                        maxWidth="Infinity" prefHeight="50" GridPane.columnIndex="0"/>
+                <Button text="Nueva Conexión" styleClass="button,secondary" 
+                        maxWidth="Infinity" prefHeight="50" GridPane.columnIndex="1"/>
+                <Button text="Calcular Ruta" styleClass="button,ghost" 
+                        maxWidth="Infinity" prefHeight="50" GridPane.columnIndex="2"/>
+            </GridPane>
+        </VBox>
+        
+        <!-- Information Cards -->
+        <GridPane hgap="16" vgap="16">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="50"/>
+                <ColumnConstraints percentWidth="50"/>
+            </columnConstraints>
+            
+            <!-- Recent Activity -->
+            <VBox styleClass="card" spacing="12" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <Label text="Actividad Reciente" styleClass="label,section-title"/>
+                <Separator/>
+                <VBox spacing="8">
+                    <Label text="• Sistema inicializado correctamente" style="-fx-text-fill: -gray-600;"/>
+                    <Label text="• Listo para cargar datos" style="-fx-text-fill: -gray-600;"/>
+                    <Label text="• Utiliza el botón 'Cargar XML' para importar datos" style="-fx-text-fill: -gray-600;"/>
+                </VBox>
+            </VBox>
+            
+            <!-- System Info -->
+            <VBox styleClass="card" spacing="12" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <Label text="Información del Sistema" styleClass="label,section-title"/>
+                <Separator/>
+                <VBox spacing="8">
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label text="Estado:" style="-fx-font-weight: 600;"/>
+                        <Label text="●" style="-fx-text-fill: #10b981; -fx-font-size: 16px;"/>
+                        <Label text="Operativo" style="-fx-text-fill: #10b981; -fx-font-weight: 600;"/>
+                    </HBox>
+                    <HBox spacing="8">
+                        <Label text="Versión:" style="-fx-font-weight: 600;"/>
+                        <Label text="1.0.0"/>
+                    </HBox>
+                    <HBox spacing="8">
+                        <Label text="Motor de Rutas:" style="-fx-font-weight: 600;"/>
+                        <Label text="Dijkstra + BFS"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </GridPane>
+        
+        <!-- Features -->
+        <VBox styleClass="card" spacing="16">
+            <Label text="Características del Sistema" styleClass="label,section-title"/>
+            <Separator/>
+            
+            <GridPane hgap="20" vgap="16">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50"/>
+                    <ColumnConstraints percentWidth="50"/>
+                </columnConstraints>
+                
+                <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <Label text="Algoritmos Avanzados" style="-fx-font-weight: 700; -fx-font-size: 14px;"/>
+                    <Label text="Utiliza algoritmos de grafos como Dijkstra y BFS para encontrar las rutas más óptimas." 
+                            wrapText="true" style="-fx-text-fill: -gray-600;"/>
+                </VBox>
+                
+                <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <Label text="Visualización de Mapas" style="-fx-font-weight: 700; -fx-font-size: 14px;"/>
+                    <Label text="Integración con Leaflet para visualizar estaciones y rutas en tiempo real sobre mapas interactivos." 
+                            wrapText="true" style="-fx-text-fill: -gray-600;"/>
+                </VBox>
+                
+                <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <Label text="Persistencia de Datos" style="-fx-font-weight: 700; -fx-font-size: 14px;"/>
+                    <Label text="Guarda y carga configuraciones de red en formato XML para reutilizar tus diseños." 
+                            wrapText="true" style="-fx-text-fill: -gray-600;"/>
+                </VBox>
+                
+                <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <Label text="Multi-idioma" style="-fx-font-weight: 700; -fx-font-size: 14px;"/>
+                    <Label text="Soporte completo para español, inglés y francés con cambio dinámico de idioma." 
+                            wrapText="true" style="-fx-text-fill: -gray-600;"/>
+                </VBox>
+            </GridPane>
+        </VBox>
+    </VBox>
+</ScrollPane>
