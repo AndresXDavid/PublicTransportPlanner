@@ -62,6 +62,13 @@ public class MainController {
         loadTabContent("/co/edu/uptc/view/SettingsView.fxml", settingsContainer);
 
         setupLanguageSelector();
+
+        // Listener para ejecutar código al seleccionar el tab de mapa
+        tabMap.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+            if (isNowSelected) {
+                reloadApplication();
+            }
+        });
     }
 
     public void selectTab(String tabId) {
