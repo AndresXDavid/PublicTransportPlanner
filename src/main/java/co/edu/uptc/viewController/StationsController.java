@@ -147,6 +147,7 @@ public class StationsController {
 
      @FXML
      private void onCancelEdit(ActionEvent event) {
+          clearForm();
           co.edu.uptc.model.Node sel = stationsTable.getSelectionModel().getSelectedItem();
           if (sel != null) {
                // si había una selección, restaurar sus valores en el formulario
