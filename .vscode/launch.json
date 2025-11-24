@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "co.edu.uptc/co.edu.uptc.App",
+            "projectName": "transportroutes"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "co.edu.uptc.App",
+            "projectName": "transportroutes",
+            "vmArgs": "--enable-native-access=javafx.graphics --enable-native-access=javafx.web --module-path out;C:/Users/FerSAR/.m2/repository/org/openjfx/javafx-controls/23/javafx-controls-23-win.jar;C:/Users/FerSAR/.m2/repository/org/openjfx/javafx-fxml/23/javafx-fxml-23-win.jar;C:/Users/FerSAR/.m2/repository/org/openjfx/javafx-web/23/javafx-web-23-win.jar;C:/Users/FerSAR/.m2/repository/org/openjfx/javafx-graphics/23/javafx-graphics-23-win.jar"
+        }
+    ]
+}
