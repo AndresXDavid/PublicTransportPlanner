@@ -514,5 +514,5 @@
 
 .emoji-label {
     -fx-font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", "Twemoji Mozilla", "Segoe UI Symbol";
-    -fx-font-size: 16px; /* Ajusta según necesites */
+    -fx-font-size: 16px; 
 }

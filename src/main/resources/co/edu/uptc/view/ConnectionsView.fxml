@@ -2,57 +2,68 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1"
-            xmlns="http://javafx.com/javafx/21"
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="co.edu.uptc.viewController.ConnectionsController">
 
-     <top>
-          <HBox spacing="8" style="-fx-padding: 8;">
-               <Button text="%button.delete" onAction="#onDeleteConnection" styleClass="button,ghost"/>
-               <Region HBox.hgrow="ALWAYS"/>
-               <TextField fx:id="searchField" promptText="%prompt.search.connection"/>
-               <Button text="%button.search" onAction="#onSearch"/>
-          </HBox>
-     </top>
+    <top>
+        <HBox spacing="10" style="-fx-padding: 10;">
+            <Button text="%button.delete" onAction="#onDeleteConnection" styleClass="button,ghost"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="searchField" promptText="%prompt.search.connection" prefWidth="200"/>
+            <Button text="%button.search" onAction="#onSearch"/>
+        </HBox>
+    </top>
 
-     <center>
-          <TableView fx:id="connectionsTable" prefHeight="480">
-               <columns>
+
+    <center>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <TableView fx:id="connectionsTable" prefHeight="450">
+                <columns>
                     <TableColumn fx:id="colFrom" text="%col.from" prefWidth="150"/>
                     <TableColumn fx:id="colTo" text="%col.to" prefWidth="150"/>
                     <TableColumn fx:id="colDistance" text="%col.distance" prefWidth="120"/>
-               </columns>
-          </TableView>
-     </center>
-
-     <bottom>
-          <AnchorPane prefHeight="160" style="-fx-background-color: white;">
-               <VBox spacing="8" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0" AnchorPane.rightAnchor="8.0">
-                    <Label text="%label.connection.details" styleClass="label,title"/>
-                    <GridPane hgap="8" vgap="8">
-                         <columnConstraints>
-                              <ColumnConstraints minWidth="80"/>
-                              <ColumnConstraints minWidth="200" prefWidth="250"/>
-                         </columnConstraints>
-                         
-                         <Label text="%col.from" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                         <ComboBox fx:id="cmbFrom" prefWidth="250" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-
-                         <Label text="%col.to" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                         <ComboBox fx:id="cmbTo" prefWidth="250" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-                         <Label text="%col.distance" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                         <TextField fx:id="distanceField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-                         <Label text="km" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
 
 
-                    </GridPane>
+    <bottom>
+        <AnchorPane prefHeight="180" style="-fx-background-color: white;">
+            <VBox spacing="12"
+                  AnchorPane.topAnchor="12"
+                  AnchorPane.leftAnchor="12"
+                  AnchorPane.rightAnchor="12"
+                  AnchorPane.bottomAnchor="12">
 
-                    <HBox spacing="8">
-                         <Button text="%button.save" onAction="#onSaveConnection" styleClass="button,primary"/>
-                         <Button text="%button.cancel" onAction="#onCancelEdit"/>
-                    </HBox>
-               </VBox>
-          </AnchorPane>
-     </bottom>
+                <Label text="%label.connection.details" styleClass="label,title"/>
+
+                <GridPane hgap="12" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="100"/>
+                        <ColumnConstraints minWidth="250" prefWidth="300"/>
+                        <ColumnConstraints minWidth="40"/>
+                    </columnConstraints>
+
+                    <Label text="%col.from" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="cmbFrom" prefWidth="250" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="%col.to" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="cmbTo" prefWidth="250" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="%col.distance" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="distanceField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    <Label text="km" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                </GridPane>
+
+                <HBox spacing="10">
+                    <Button text="%button.save" onAction="#onSaveConnection" styleClass="button,primary"/>
+                    <Button text="%button.cancel" onAction="#onCancelEdit"/>
+                </HBox>
+
+            </VBox>
+        </AnchorPane>
+    </bottom>
+
 </BorderPane>

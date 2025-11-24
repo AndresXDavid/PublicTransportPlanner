@@ -2,37 +2,65 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1"
-      xmlns="http://javafx.com/javafx/21"
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="co.edu.uptc.viewController.RoutesController"
-      spacing="8" style="-fx-padding: 10;">
+      spacing="12" style="-fx-padding: 12;">
 
-     <HBox spacing="8" alignment="CENTER_LEFT">
-          <Label text="%label.route.from"/>
-          <ComboBox fx:id="cmbFrom" prefWidth="180"/>
-          <Label text="%label.route.to"/>
-          <ComboBox fx:id="cmbTo" prefWidth="180"/>
-          <Label text="%label.route.criteria"/>
-          <ComboBox fx:id="cmbCriteria" prefWidth="160"/>
-          <Button text="%button.calculate" onAction="#onCalculate" styleClass="button,primary"/>
-     </HBox>
+    <HBox spacing="12" alignment="CENTER_LEFT">
 
-     <SplitPane orientation="HORIZONTAL" prefHeight="520" VBox.vgrow="ALWAYS">
-          <AnchorPane>
-               <ListView fx:id="resultList" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" 
-                         AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
-          </AnchorPane>
+        <Label text="%label.route.from"/>
+        <ComboBox fx:id="cmbFrom" prefWidth="200"/>
 
-          <AnchorPane>
-               <VBox spacing="8" AnchorPane.topAnchor="8.0" AnchorPane.leftAnchor="8.0" 
+        <Label text="%label.route.to"/>
+        <ComboBox fx:id="cmbTo" prefWidth="200"/>
+
+        <Label text="%label.route.criteria"/>
+        <ComboBox fx:id="cmbCriteria" prefWidth="180"/>
+
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="%button.calculate" onAction="#onCalculate" styleClass="button,primary"/>
+
+    </HBox>
+
+
+    <SplitPane orientation="HORIZONTAL"
+               prefHeight="520"
+               VBox.vgrow="ALWAYS">
+
+        <AnchorPane>
+            <ListView fx:id="resultList"
+                      AnchorPane.topAnchor="0"
+                      AnchorPane.bottomAnchor="0"
+                      AnchorPane.leftAnchor="0"
+                      AnchorPane.rightAnchor="0"/>
+        </AnchorPane>
+
+        <AnchorPane>
+          <VBox spacing="14"
+                    AnchorPane.topAnchor="0"
+                    AnchorPane.leftAnchor="0"
+                    AnchorPane.rightAnchor="0"
+                    AnchorPane.bottomAnchor="0"
+                    style="-fx-padding: 16;">
+
+               <VBox spacing="8" AnchorPane.topAnchor="8.0" AnchorPane.leftAnchor="8.0"
                     AnchorPane.rightAnchor="8.0" AnchorPane.bottomAnchor="8.0">
+
                     <Label text="%label.route.details" styleClass="label,title"/>
-                    <TextArea fx:id="routeDetails" editable="false" wrapText="true" VBox.vgrow="ALWAYS"/>
-                    <HBox spacing="8">
-                         <Button text="%button.showOnMap" onAction="#onShowOnMap" styleClass="button,ghost"/>
-                         <Button text="%button.export" onAction="#onExport" styleClass="button,ghost"/>
-                    </HBox>
+
+                    <TextArea fx:id="routeDetails"
+                              editable="false"
+                              wrapText="true"
+                              VBox.vgrow="ALWAYS"
+                              style="-fx-font-size: 16px; -fx-padding: 14; -fx-background-radius: 12;"/>
+
                </VBox>
-          </AnchorPane>
-     </SplitPane>
+
+          </VBox>
+     </AnchorPane>
+
+
+    </SplitPane>
+
 </VBox>
