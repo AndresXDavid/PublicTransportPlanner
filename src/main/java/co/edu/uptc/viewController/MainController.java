@@ -149,8 +149,14 @@ public class MainController {
         confirmDialog.setContentText(getString("confirm.restart.app", 
             "¿Desea recargar la aplicación para aplicar los cambios?\n\nLa aplicación se recargará inmediatamente."));
         
-        ButtonType reloadButton = new ButtonType("🔄 Recargar", ButtonBar.ButtonData.OK_DONE);
-        ButtonType cancelButton = new ButtonType("❌ Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType reloadButton = new ButtonType(
+                "🔄 " + getString("button.reload"),
+                ButtonBar.ButtonData.OK_DONE
+        );
+        ButtonType cancelButton = new ButtonType(
+            "❌ " + getString("button.cancel"),
+            ButtonBar.ButtonData.CANCEL_CLOSE
+        );
         
         confirmDialog.getButtonTypes().setAll(reloadButton, cancelButton);
         

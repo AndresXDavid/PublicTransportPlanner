@@ -5,6 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import co.edu.uptc.controller.GraphController;
+import co.edu.uptc.validation.StationValidator;
+
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -42,12 +44,15 @@ public class StationsController {
           });
      }
 
+     private String originalId = null;
+     
      private void loadToForm(co.edu.uptc.model.Node n) {
           idField.setText(n.getId());
           nameField.setText(n.getName());
           if (n.getLatitude() != null) latField.setText(n.getLatitude().toString());
           if (n.getLongitude() != null) lngField.setText(n.getLongitude().toString());
           idField.setDisable(true); // evitar cambiar ID en edición
+          originalId = n.getId();
      }
 
      private void clearForm() {
@@ -56,6 +61,7 @@ public class StationsController {
           latField.setText("");
           lngField.setText("");
           idField.setDisable(false);
+          originalId = null;
           stationsTable.getSelectionModel().clearSelection();
      }
 
@@ -76,35 +82,27 @@ public class StationsController {
           String latS = latField.getText().trim();
           String lngS = lngField.getText().trim();
 
-          if (id.isEmpty() || name.isEmpty()) {
-               showAlert(Alert.AlertType.WARNING, bundle.getString("error.fill.fields"));
-               return;
-          }
-
-          Double lat = null, lng = null;
           try {
-               if (!latS.isEmpty()) lat = Double.valueOf(latS);
-               if (!lngS.isEmpty()) lng = Double.valueOf(lngS);
-          } catch (NumberFormatException ex) {
-               showAlert(Alert.AlertType.WARNING, bundle.getString("error.invalid.coordinates"));
+               StationValidator.validate(id, name, latS, lngS, originalId,
+                    graphController.getAllNodes(), 
+                    bundle);
+          } catch (Exception e) {
+               showAlert(Alert.AlertType.ERROR, e.getMessage());
                return;
           }
 
-          // Validar nombre duplicado (ejemplo)
-          boolean nameExists = graphController.getAllNodes().stream()
-                    .filter(n -> !n.getId().equals(id))
-                    .anyMatch(n -> n.getName().equalsIgnoreCase(name));
-          if (nameExists) {
-               showAlert(Alert.AlertType.ERROR, bundle.getString("error.duplicate.name"));
-               return;
-          }
+          //Parse seguro despues de validacion
+          Double lat = latS.isEmpty() ? null : Double.valueOf(latS);
+          Double lng = lngS.isEmpty() ? null : Double.valueOf(lngS);
 
           boolean result;
+
           if (graphController.existsNode(id)) {
-               // editar (ajusta método si tu GraphController lo maneja distinto)
+               //Editar
                graphController.editNode(id, name, lat, lng);
                result = true;
           } else {
+               //Crear
                result = graphController.addNode(new co.edu.uptc.model.Node(id, name, lat, lng));
           }
 

@@ -13,112 +13,166 @@ import java.util.stream.Collectors;
 
 public class ConnectionsController {
 
-     @FXML private TableView<Edge> connectionsTable;
-     @FXML private TableColumn<Edge, String> colFrom, colTo, colDistance, colTime;
-     @FXML private ComboBox<String> cmbFrom, cmbTo;
-     @FXML private TextField distanceField, searchField;
+    @FXML private TableView<Edge> connectionsTable;
+    @FXML private TableColumn<Edge, String> colFrom, colTo, colDistance, colTime;
+    @FXML private ComboBox<String> cmbFrom, cmbTo;
+    @FXML private TextField distanceField, searchField;
 
-     private GraphController graphController;
-     private ResourceBundle bundle;
+    private GraphController graphController;
+    private ResourceBundle bundle;
 
-     @FXML
-     public void initialize() {
-          bundle = ResourceBundle.getBundle("co.edu.uptc.i18n.messages");
-          graphController = GraphController.getInstance();
+    @FXML
+    public void initialize() {
+        bundle = ResourceBundle.getBundle("co.edu.uptc.i18n.messages");
+        graphController = GraphController.getInstance();
 
-          colFrom.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getFromId()));
-          colTo.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getToId()));
-          colDistance.setCellValueFactory(cd -> new SimpleStringProperty(String.valueOf(cd.getValue().getDistance())));
+        colFrom.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getFromId()));
+        colTo.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getToId()));
+        colDistance.setCellValueFactory(cd -> new SimpleStringProperty(String.valueOf(cd.getValue().getDistance())));
+        
+        refreshData();
 
-          refreshData();
-     }
+        connectionsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
+            if (newSel != null){
+                cmbFrom.setValue(newSel.getFromId());
+                cmbTo.setValue(newSel.getToId());
+                distanceField.setText(String.valueOf(newSel.getDistance()));
+            }
+        });
+    }
 
-     private void refreshData() {
-          List<Edge> edges = graphController.getAllEdges();
-          connectionsTable.getItems().setAll(edges);
+    private void refreshData() {
+        List<Edge> edges = graphController.getAllEdges();
+        connectionsTable.getItems().setAll(edges);
 
-          // rellenar comboboxes
-          List<String> ids = graphController.getAllNodes().stream().map(n -> n.getId()).collect(Collectors.toList());
-          cmbFrom.getItems().setAll(ids);
-          cmbTo.getItems().setAll(ids);
-     }
+        List<String> ids = graphController.getAllNodes()
+                .stream()
+                .map(n -> n.getId())
+                .collect(Collectors.toList());
 
-     @FXML
-     private void onNewConnection() {
-          clearForm();
-     }
+        cmbFrom.getItems().setAll(ids);
+        cmbTo.getItems().setAll(ids);
+    }
 
-     @FXML
-     private void onDeleteConnection() {
-          Edge sel = connectionsTable.getSelectionModel().getSelectedItem();
-          if (sel == null) {
-               showAlert(Alert.AlertType.WARNING, bundle.getString("error.select.row"));
-               return;
-          }
-          graphController.deleteEdge(sel);
-          refreshData();
-          showAlert(Alert.AlertType.INFORMATION, bundle.getString("info.connection.deleted"));
-     }
+    @FXML
+    private void onNewConnection() {
+        clearForm();
+        connectionsTable.getSelectionModel().clearSelection();
+    }
 
-     @FXML
-     private void onSearch() {
-          String q = searchField.getText().trim().toLowerCase();
-          List<Edge> edges = graphController.getAllEdges();
-          if (!q.isEmpty()) {
-               edges = edges.stream().filter(e -> e.getFromId().toLowerCase().contains(q) || e.getToId().toLowerCase().contains(q)).collect(Collectors.toList());
-          }
-          connectionsTable.getItems().setAll(edges);
-     }
+    @FXML
+    private void onDeleteConnection() {
+        Edge sel = connectionsTable.getSelectionModel().getSelectedItem();
+        if (sel == null) {
+            showAlert(Alert.AlertType.WARNING, bundle.getString("error.select.row"));
+            return;
+        }
 
-     @FXML
-     private void onSaveConnection() {
-          String from = cmbFrom.getValue();
-          String to = cmbTo.getValue();
-          String distS = distanceField.getText().trim();
+        graphController.deleteEdge(sel);
+        refreshData();
+        showAlert(Alert.AlertType.INFORMATION, bundle.getString("info.connection.deleted"));
+        clearForm();
+    }
 
-          if (from == null || to == null || distS.isEmpty()) {
-               showAlert(Alert.AlertType.WARNING, bundle.getString("error.fill.fields"));
-               return;
-          }
-          if (from.equals(to)) {
-               showAlert(Alert.AlertType.WARNING, bundle.getString("error.same.station"));
-               return;
-          }
-          try {
-               double dist = Double.parseDouble(distS);
-               graphController.addEdge(new Edge(from, to, dist));
-               refreshData();
-               showAlert(Alert.AlertType.INFORMATION, bundle.getString("info.connection.saved"));
-               clearForm();
-          } catch (NumberFormatException ex) {
-               showAlert(Alert.AlertType.WARNING, bundle.getString("error.invalid.number"));
-          }
-     }
+    @FXML
+    private void onSearch() {
+        String q = searchField.getText().trim().toLowerCase();
+        List<Edge> edges = graphController.getAllEdges();
 
-     @FXML
-     private void onCancelEdit(ActionEvent event) {
-          Edge sel = connectionsTable.getSelectionModel().getSelectedItem();
-          if (sel != null) {
-               // si había una selección, restaurar sus valores en el formulario
-               cmbFrom.setValue(sel.getFromId());
-               cmbTo.setValue(sel.getToId());
-               distanceField.setText(String.valueOf(sel.getDistance()));
-          } else {
-               // si no había selección (se estaba creando uno nuevo), limpiar el formulario
-               clearForm();
-          }
-     }
+        if (!q.isEmpty()) {
+            edges = edges.stream()
+                    .filter(e ->
+                            e.getFromId().toLowerCase().contains(q) ||
+                            e.getToId().toLowerCase().contains(q)
+                    )
+                    .collect(Collectors.toList());
+        }
 
-     private void clearForm() {
-          cmbFrom.setValue(null);
-          cmbTo.setValue(null);
-          distanceField.setText("");
-     }
+        connectionsTable.getItems().setAll(edges);
+    }
 
-     private void showAlert(Alert.AlertType t, String txt) {
-          Alert a = new Alert(t);
-          a.setHeaderText(null);
-          a.setContentText(txt);
-          a.showAndWait();
-     }
+    @FXML
+    private void onSaveConnection() {
+        String from = cmbFrom.getValue();
+        String to = cmbTo.getValue();
+        String distS = distanceField.getText().trim();
+
+        // === VALIDACIONES ===
+        if (from == null || to == null || distS.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, bundle.getString("error.fill.fields"));
+            return;
+        }
+
+        if (from.equals(to)) {
+            showAlert(Alert.AlertType.WARNING, bundle.getString("error.same.station"));
+            return;
+        }
+
+        double dist;
+        try {
+            dist = Double.parseDouble(distS);
+        } catch (NumberFormatException ex) {
+            showAlert(Alert.AlertType.WARNING, bundle.getString("error.invalid.number"));
+            return;
+        }
+
+        if (dist <= 0) {
+            showAlert(Alert.AlertType.WARNING, bundle.getString("error.distance.invalid"));
+            return;
+        }
+
+        // VERIFICAR SI YA EXISTE
+        Edge existing = graphController.getEdge(from, to);
+
+        if (existing != null) {
+            // Confirmación de sobrescritura
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+            confirm.setHeaderText(null);
+            confirm.setContentText(
+                    bundle.getString("confirm.connection.overwrite")
+                            + " (" + from + " → " + to + ")"
+            );
+
+            ButtonType btnYes = new ButtonType(bundle.getString("button.yes"), ButtonBar.ButtonData.YES);
+            ButtonType btnNo = new ButtonType(bundle.getString("button.no"), ButtonBar.ButtonData.NO);
+
+            confirm.getButtonTypes().setAll(btnYes, btnNo);
+
+            confirm.showAndWait().ifPresent(button -> {
+                if (button == btnYes) {
+                    graphController.editEdge(from, to, dist);
+                    refreshData();
+                    showAlert(Alert.AlertType.INFORMATION, bundle.getString("info.connection.updated"));
+                    clearForm();
+                }
+            });
+
+            return;
+        }
+
+        // CREAR NUEVA
+        graphController.addEdge(new Edge(from, to, dist));
+        refreshData();
+        showAlert(Alert.AlertType.INFORMATION, bundle.getString("info.connection.saved"));
+        clearForm();
+    }
+
+    @FXML
+    private void onCancelEdit(ActionEvent event) {
+        clearForm();
+        connectionsTable.getSelectionModel().clearSelection();
+    }
+
+    private void clearForm() {
+        cmbFrom.setValue(null);
+        cmbTo.setValue(null);
+        distanceField.setText("");
+    }
+
+    private void showAlert(Alert.AlertType t, String txt) {
+        Alert a = new Alert(t);
+        a.setHeaderText(null);
+        a.setContentText(txt);
+        a.showAndWait();
+    }
 }

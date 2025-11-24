@@ -112,6 +112,32 @@ public class GraphController {
         return edges;
     }
 
+    public Edge getEdge(String fromId, String toId) {
+        Node from = nodes.get(fromId);
+        if (from == null) return null;
+
+        for (Edge e : from.getEdges()) {
+            if (e.getToId().equalsIgnoreCase(toId)) {
+                return e;
+            }
+        }
+        return null;
+    }
+
+    public boolean editEdge(String fromId, String toId, double newDistance) {
+        Edge e1 = getEdge(fromId, toId);
+        Edge e2 = getEdge(toId, fromId);
+
+        if (e1 == null || e2 == null) return false;
+
+        // Actualizar distancia directamente
+        e1.setDistance(newDistance);
+        e2.setDistance(newDistance);
+
+        return true;
+    }
+
+
     // ---- Persistencia ----
     public void saveGraph(String path) {
         GraphData gd = new GraphData(new ArrayList<>(nodes.values()));

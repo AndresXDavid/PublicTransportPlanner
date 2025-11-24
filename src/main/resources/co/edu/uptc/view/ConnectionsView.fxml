@@ -8,7 +8,6 @@
 
      <top>
           <HBox spacing="8" style="-fx-padding: 8;">
-               <Button text="%button.new" onAction="#onNewConnection" styleClass="button,primary"/>
                <Button text="%button.delete" onAction="#onDeleteConnection" styleClass="button,ghost"/>
                <Region HBox.hgrow="ALWAYS"/>
                <TextField fx:id="searchField" promptText="%prompt.search.connection"/>
