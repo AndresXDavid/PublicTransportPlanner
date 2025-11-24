@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import co.edu.uptc.controller.GraphController;
 import co.edu.uptc.model.Edge;
+import co.edu.uptc.model.Node;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -26,8 +27,27 @@ public class ConnectionsController {
         bundle = ResourceBundle.getBundle("co.edu.uptc.i18n.messages");
         graphController = GraphController.getInstance();
 
-        colFrom.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getFromId()));
-        colTo.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getToId()));
+        colFrom.setCellValueFactory(cd -> {
+            Edge e = cd.getValue();
+            if (e == null) return new SimpleStringProperty("");
+            Node n = graphController.getNode(e.getFromId());
+            String text = e.getFromId();
+            if (n != null && n.getName() != null && !n.getName().isBlank()) {
+                text = n.getName() + " [" + e.getFromId() + "]";
+            }
+            return new SimpleStringProperty(text);
+        });
+
+        colTo.setCellValueFactory(cd -> {
+            Edge e = cd.getValue();
+            if (e == null) return new SimpleStringProperty("");
+            Node n = graphController.getNode(e.getToId());
+            String text = e.getToId();
+            if (n != null && n.getName() != null && !n.getName().isBlank()) {
+                text = n.getName() + " [" + e.getToId() + "]";
+            }
+            return new SimpleStringProperty(text);
+        });
         colDistance.setCellValueFactory(cd -> new SimpleStringProperty(String.valueOf(cd.getValue().getDistance())));
         
         refreshData();

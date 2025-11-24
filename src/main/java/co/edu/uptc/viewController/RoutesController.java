@@ -83,7 +83,7 @@ public class RoutesController {
           }
 
           routeDetails.setText(
-          bundle.getString("label.distance") + ": " + rr.getDistance() + " km\n" +
+          bundle.getString("label.distance") + ": " + String.format("%.2f", rr.getDistance()) + " km\n" +
           bundle.getString("label.time") + ": " + timeText + "\n" +
           bundle.getString("label.transfers") + ": " + rr.getTransfers()
           );

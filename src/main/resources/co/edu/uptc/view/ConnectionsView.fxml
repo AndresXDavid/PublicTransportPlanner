@@ -20,9 +20,9 @@
         <VBox spacing="10" style="-fx-padding: 10;">
             <TableView fx:id="connectionsTable" prefHeight="450">
                 <columns>
-                    <TableColumn fx:id="colFrom" text="%col.from" prefWidth="150"/>
-                    <TableColumn fx:id="colTo" text="%col.to" prefWidth="150"/>
-                    <TableColumn fx:id="colDistance" text="%col.distance" prefWidth="120"/>
+                    <TableColumn fx:id="colFrom" text="%col.from" prefWidth="300"/>
+                    <TableColumn fx:id="colTo" text="%col.to" prefWidth="300"/>
+                    <TableColumn fx:id="colDistance" text="%col.distance" prefWidth="300"/>
                 </columns>
             </TableView>
         </VBox>

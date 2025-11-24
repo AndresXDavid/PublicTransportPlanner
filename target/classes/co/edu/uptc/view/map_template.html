@@ -2,18 +2,47 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Mapa</title>
+    <title>Mapa de Transporte Público</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="leaflet.css" />
-    <script src="leaflet.js"></script>
-
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="../leaflet/leaflet.css" />
+    
     <style>
-        html, body, #map {
-            height: 100%;
-            width: 100%;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        #map {
+            height: 100vh;
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        /* Asegurar que los tiles de Leaflet se carguen correctamente */
+        .leaflet-container {
+            background: #f0f0f0;
+        }
+        
+        /* Estilo para los popups */
+        .leaflet-popup-content {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+        }
+        
+        .leaflet-popup-content b {
+            color: #2563eb;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -21,50 +50,185 @@
 <body>
     <div id="map"></div>
 
+    <!-- Leaflet JS -->
+    <script src="../leaflet/leaflet.js"></script>
+
     <script>
-    let map;
+    // Variables globales
+    let map = null;
     let markers = [];
+    let markersLayer = null;
 
+    /**
+     * Inicializa el mapa de Leaflet
+     * Solo se ejecuta una vez para evitar múltiples instancias
+     */
     function initMap() {
-        if (map) return; // evita múltiples inicializaciones
-
-        map = L.map('map').setView([4.65, -74.05], 12);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-        }).addTo(map);
-
-        if (window.stationsToLoad) {
-            loadStations(window.stationsToLoad);
+        // Evitar múltiples inicializaciones
+        if (map) {
+            console.log('⚠️ Mapa ya inicializado');
+            return;
         }
 
-        // Forzar redibujo después de un pequeño retraso
-        setTimeout(() => map.invalidateSize(), 200);
+        try {
+            // Crear el mapa centrado en Bogotá por defecto
+            map = L.map('map', {
+                center: [4.65, -74.05],
+                zoom: 12,
+                zoomControl: true,
+                attributionControl: true
+            });
+
+            // Añadir capa de tiles de OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Crear capa para los marcadores
+            markersLayer = L.layerGroup().addTo(map);
+
+            // Forzar redibujo inicial
+            setTimeout(() => {
+                if (map) {
+                    map.invalidateSize();
+                }
+            }, 100);
+
+            console.log('✅ Mapa inicializado correctamente');
+
+            // Si hay estaciones pre-cargadas, dibujarlas
+            if (window.stationsToLoad) {
+                loadStations(window.stationsToLoad);
+            }
+
+        } catch (error) {
+            console.error('❌ Error al inicializar mapa:', error);
+        }
     }
 
+    /**
+     * Carga las estaciones en el mapa
+     * @param {Array} stations - Array de objetos con {id, name, lat, lng}
+     */
     function loadStations(stations) {
+        // Guardar estaciones para cargar después si el mapa no está listo
         window.stationsToLoad = stations;
 
-        if (!map) return; // si no está listo, se dibuja cuando initMap se llame
-
-        markers.forEach(m => map.removeLayer(m));
-        markers = [];
-
-        stations.forEach(s => {
-            if (s.lat != null && s.lng != null) {
-                const m = L.marker([s.lat, s.lng])
-                    .addTo(map)
-                    .bindPopup(`<b>${s.id}</b><br/>${s.name || ''}`);
-                markers.push(m);
-            }
-        });
-
-        if (stations.length > 0) {
-            map.setView([stations[0].lat, stations[0].lng], 13);
+        if (!map) {
+            console.log('⚠️ Mapa no inicializado, estaciones guardadas');
+            return;
         }
 
-        map.invalidateSize(); // asegurarse que se dibuje correctamente
+        try {
+            // Limpiar marcadores anteriores
+            if (markersLayer) {
+                markersLayer.clearLayers();
+            }
+            markers = [];
+
+            // Validar que tenemos estaciones
+            if (!stations || stations.length === 0) {
+                console.log('⚠️ No hay estaciones para cargar');
+                return;
+            }
+
+            // Variable para calcular bounds
+            let bounds = [];
+
+            // Añadir cada estación como marcador
+            stations.forEach(station => {
+                if (station.lat != null && station.lng != null) {
+                    try {
+                        // Crear marcador
+                        const marker = L.marker([station.lat, station.lng], {
+                            title: station.name || station.id
+                        });
+
+                        // Crear popup
+                        const popupContent = `
+                            <div style="text-align: center;">
+                                <b>${station.id}</b><br/>
+                                <span style="color: #666;">${station.name || 'Sin nombre'}</span>
+                            </div>
+                        `;
+                        marker.bindPopup(popupContent);
+
+                        // Añadir a la capa
+                        marker.addTo(markersLayer);
+                        markers.push(marker);
+                        bounds.push([station.lat, station.lng]);
+
+                    } catch (error) {
+                        console.error('❌ Error al crear marcador:', error);
+                    }
+                }
+            });
+
+            // Ajustar vista para mostrar todas las estaciones
+            if (bounds.length > 0) {
+                try {
+                    if (bounds.length === 1) {
+                        // Solo una estación: centrar en ella
+                        map.setView(bounds[0], 15);
+                    } else {
+                        // Múltiples estaciones: ajustar bounds
+                        map.fitBounds(bounds, {
+                            padding: [50, 50],
+                            maxZoom: 15
+                        });
+                    }
+                } catch (error) {
+                    console.error('❌ Error al ajustar vista:', error);
+                }
+            }
+
+            // Forzar redibujo
+            setTimeout(() => {
+                if (map) {
+                    map.invalidateSize();
+                }
+            }, 200);
+
+            console.log(`✅ ${stations.length} estaciones cargadas en el mapa`);
+
+        } catch (error) {
+            console.error('❌ Error al cargar estaciones:', error);
+        }
     }
+
+    /**
+     * Limpia todos los marcadores del mapa
+     */
+    function clearMarkers() {
+        if (markersLayer) {
+            markersLayer.clearLayers();
+        }
+        markers = [];
+    }
+
+    /**
+     * Fuerza el redibujo del mapa
+     * Útil cuando el contenedor cambia de tamaño
+     */
+    function refreshMap() {
+        if (map) {
+            map.invalidateSize();
+        }
+    }
+
+    // Auto-inicializar cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('📄 DOM cargado');
+        });
+    }
+
+    // Manejar resize de la ventana
+    window.addEventListener('resize', () => {
+        refreshMap();
+    });
+
     </script>
 </body>
 </html>
