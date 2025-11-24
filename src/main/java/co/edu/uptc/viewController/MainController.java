@@ -66,6 +66,12 @@ public class MainController {
         if (lblLanguage != null) {
             lblLanguage.setText(getString("label.language"));
         }
+        if (btnLoadXml != null) {
+            btnLoadXml.setText(getString("button.load.xml"));
+        }
+        if (btnSaveXml != null) {
+            btnSaveXml.setText(getString("button.save.xml"));
+        }
 
         // Listener para ejecutar código al seleccionar el tab de mapa
         tabMap.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
@@ -203,6 +209,14 @@ public class MainController {
             // Actualizar label del selector de idioma
             if (lblLanguage != null) {
                 lblLanguage.setText(getString("label.language"));
+            }
+
+            // Actualizar botones del toolbar (Load/Save)
+            if (btnLoadXml != null) {
+                btnLoadXml.setText(getString("button.load.xml"));
+            }
+            if (btnSaveXml != null) {
+                btnSaveXml.setText(getString("button.save.xml"));
             }
 
         } catch (Exception e) {
