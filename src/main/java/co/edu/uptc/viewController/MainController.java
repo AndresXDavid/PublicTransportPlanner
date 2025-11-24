@@ -63,6 +63,10 @@ public class MainController {
 
         setupLanguageSelector();
 
+        if (lblLanguage != null) {
+            lblLanguage.setText(getString("label.language"));
+        }
+
         // Listener para ejecutar código al seleccionar el tab de mapa
         tabMap.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
             if (isNowSelected) {
@@ -179,6 +183,9 @@ public class MainController {
             
             // Recargar todas las vistas
             dashboardController = loadTabContentWithController("/co/edu/uptc/view/DashboardView.fxml", dashboardContainer);
+            if (dashboardController != null) {
+                dashboardController.setMainController(this);
+            }
             loadTabContent("/co/edu/uptc/view/StationsView.fxml", stationsContainer);
             loadTabContent("/co/edu/uptc/view/ConnectionsView.fxml", connectionsContainer);
             loadTabContent("/co/edu/uptc/view/RoutesView.fxml", routesContainer);
@@ -192,6 +199,11 @@ public class MainController {
             
             // Actualizar textos de los tabs
             updateTabTitles();
+
+            // Actualizar label del selector de idioma
+            if (lblLanguage != null) {
+                lblLanguage.setText(getString("label.language"));
+            }
 
         } catch (Exception e) {
             showError("❌ Error al recargar la aplicación: " + e.getMessage());

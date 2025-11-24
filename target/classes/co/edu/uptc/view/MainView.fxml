@@ -13,7 +13,7 @@
                <Button fx:id="btnSaveXml" text="%button.save.xml" onAction="#onSaveGraph" styleClass="button,ghost"/>
                <Separator orientation="VERTICAL"/>
                <Region HBox.hgrow="ALWAYS"/>
-               <Label text="%label.language" style="-fx-font-weight: 600;"/>
+               <Label fx:id="lblLanguage" text="%label.language" style="-fx-font-weight: 600;"/>
                <ComboBox fx:id="cmbLocale" prefWidth="140" styleClass="combo-box"/>
           </ToolBar>
      </top>
