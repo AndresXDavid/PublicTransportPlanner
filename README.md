@@ -560,7 +560,7 @@ Este proyecto está bajo la Licencia MIT. Ver archivo `LICENSE` para más detall
 
 ¿Tienes preguntas o problemas?
 
-- 📧 Email: soporte@transportroutes.edu.co
+- 📧 Email: ferney.alvarez@uptc.edu.co
 - 🐛 Issues: [GitHub Issues](https://github.com/tu-usuario/TransportRoutes/issues)
 - 📖 Docs: [Wiki del Proyecto](https://github.com/tu-usuario/TransportRoutes/wiki)
 
